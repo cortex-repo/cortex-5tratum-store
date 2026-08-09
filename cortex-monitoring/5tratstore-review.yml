@@ -1,12 +1,12 @@
 schemaVersion: 1
 status: proposed
 appId: cortex-monitoring
-appVersion: 1.0.5
+appVersion: dev-0.0.1
 reviewedAt: ""
 reviewedBy: ""
 upstream:
   sourceUrl: https://github.com/grafana/grafana
-  license: Multi-component (see LICENSES.md)
+  license: AGPL-3.0-only
   licenseEvidence: https://github.com/grafana/grafana/blob/v13.1.0/LICENSE
 delivery:
   mode: direct-upstream-artifact
@@ -36,9 +36,6 @@ security:
   devicesReviewed: true
   networkEndpointsReviewed: true
 notes: >-
-  Bundled multi-service monitoring recipe for Custom Store use. Node Exporter
-  requires read-only host mounts of /proc, /sys, and / (as /host/root) plus
-  pid: host. No privileged mode and no Docker socket. Alloy does not mount the
-  Docker socket; log pipelines to VictoriaLogs must be added by the operator.
-  Maintainer lifecycle testing and rights clearance are still required before
-  any GLOBAL approval.
+  Custom Store recipe copied from 5tratStore GLOBAL grafana 13.1.0 and rebranded
+  as Cortex Monitoring for local testing. Runtime compose matches the official
+  recipe; only listing id/name/version/port differ. Not self-approved for GLOBAL.

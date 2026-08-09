@@ -1,47 +1,20 @@
 # Licence and image record
 
-Cortex Monitoring is a **recipe-only** bundle. This repository does not host
-upstream binaries or container layers; each node pulls pinned images from the
-original publishers at install time.
+Copied from the 5tratStore GLOBAL Grafana recipe and rebranded as Cortex Monitoring
+for Custom Store testing. Runtime artifacts are unchanged upstream images.
 
-## Upstream components
-
-- **Grafana 13.1.0** — AGPL-3.0-only
+- Upstream: Grafana 13.1.0 — GNU Affero General Public License v3.0
   - Source: https://github.com/grafana/grafana/tree/v13.1.0
   - Licence: https://github.com/grafana/grafana/blob/v13.1.0/LICENSE
-  - Image: `grafana/grafana:13.1.0@sha256:121a7a9ece6dc10b969f1f96eed64b4f07dfac0d0b8abc070f7cb83bbde86f63`
-- **VictoriaMetrics v1.148.0** — Apache-2.0
-  - Source: https://github.com/VictoriaMetrics/VictoriaMetrics/tree/v1.148.0
-  - Licence: https://github.com/VictoriaMetrics/VictoriaMetrics/blob/v1.148.0/LICENSE
-  - Image: `victoriametrics/victoria-metrics:v1.148.0@sha256:407013e902f9a0ba1d4b2d4c077c47bbaf917c893c52ff39b19efe83a654afda`
-- **VictoriaLogs v1.52.0** — Apache-2.0
-  - Source: https://github.com/VictoriaMetrics/VictoriaLogs/tree/v1.52.0
-  - Licence: https://github.com/VictoriaMetrics/VictoriaLogs/blob/v1.52.0/LICENSE
-  - Image: `victoriametrics/victoria-logs:v1.52.0@sha256:47b820890d64c4575a2a0a46415dcd8a4fd59a0f1fcd6a377693d7aea639442e`
-- **Grafana Alloy v1.11.3** — Apache-2.0
-  - Source: https://github.com/grafana/alloy/tree/v1.11.3
-  - Licence: https://github.com/grafana/alloy/blob/v1.11.3/LICENSE
-  - Image: `grafana/alloy:v1.11.3@sha256:8c7256f412feb9f5f48f9f6f9394dc97ca887f63dea9304f347970ecc1787669`
-- **Prometheus Node Exporter v1.9.1** — Apache-2.0
-  - Source: https://github.com/prometheus/node_exporter/tree/v1.9.1
-  - Licence: https://github.com/prometheus/node_exporter/blob/v1.9.1/LICENSE
-  - Image: `prom/node-exporter:v1.9.1@sha256:d00a542e409ee618a4edc67da14dd48c5da66726bbd5537ab2af9c1dfc442c8a`
-- **Alertmanager v0.33.1** — Apache-2.0
-  - Source: https://github.com/prometheus/alertmanager/tree/v0.33.1
-  - Licence: https://github.com/prometheus/alertmanager/blob/v0.33.1/LICENSE
-  - Image: `quay.io/prometheus/alertmanager:v0.33.1@sha256:9e082985f56f4c8c9f724e18f2288c6708f472e56a5286b8863d080434ea065d`
-- **Alpine 3.22.1** (init helper) — Apache-2.0 (MIT-style for Alpine components as documented upstream)
-  - Image: `alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1`
+  - Notice: https://github.com/grafana/grafana/blob/v13.1.0/NOTICE.md
+- Container: official `grafana/grafana:13.1.0`
+  - Multi-architecture index digest: `sha256:121a7a9ece6dc10b969f1f96eed64b4f07dfac0d0b8abc070f7cb83bbde86f63`
+  - Image documentation: https://grafana.com/docs/grafana/v13.1/setup-grafana/installation/docker/
+- Initialisation helper: Alpine Linux `alpine:3.22.1`
+  - Multi-architecture index digest: `sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1`
+  - Licence information: https://www.alpinelinux.org/about/
+- The icon is loaded directly from the official Grafana project asset:
+  https://raw.githubusercontent.com/grafana/grafana/v13.1.0/public/img/grafana_icon.svg
 
-## Host mounts (Node Exporter)
-
-Node Exporter binds the following host paths read-only: `/proc` → `/host/proc`,
-`/sys` → `/host/sys`, `/` → `/host/root`, and uses `pid: host`. This is required
-for accurate host metrics and is disclosed for security review. The recipe does
-not enable `privileged: true` or mount the Docker socket.
-
-## Icon
-
-`icon.png` is original, trademark-neutral artwork created for this recipe (teal
-panel with abstract bar marks). It does not use Grafana, VictoriaMetrics, or
-Prometheus brand marks.
+The recipe runs an unmodified official upstream image. Corresponding source is
+available from the exact tagged source link above.
