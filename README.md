@@ -17,8 +17,21 @@ Custom [5tratStore](https://github.com/WillItMod/5tratStore-global)-format catal
    ```
 
 3. Install **Cortex Monitoring**.
-4. Open the app and sign in to Grafana as `admin` with the generated app password.
+4. Open the app and sign in to Grafana as `admin` / `cortex` (Custom Store default when `APP_PASSWORD` is not shown). If the OS generated a password, also check:
+
+   ```bash
+   sudo cat /var/lib/5tratumos/apps/cortex-monitoring/data/admin-password.txt
+   sudo grep -R APP_PASSWORD /var/lib/5tratumos/apps/cortex-monitoring -n 2>/dev/null
+   ```
+
 5. Uninstall duplicate GLOBAL Grafana / VictoriaMetrics / VictoriaLogs / Prometheus apps if you do not want parallel stacks.
+
+If the 5tratumOS app icon fails to open but `http://<node>:33040` works, update/reinstall this app (proxy host + Grafana embed settings). To reset Grafana admin after the fact:
+
+```bash
+docker ps --format '{{.Names}}' | grep -i cortex
+docker exec -it <grafana-container> grafana cli admin reset-admin-password cortex
+```
 
 Optional local clone (recipe mirror only; install still goes through the store UI):
 
