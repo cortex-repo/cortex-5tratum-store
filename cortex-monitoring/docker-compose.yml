@@ -21,7 +21,7 @@ services:
         chown -R 1000:1000 /data/victoriametrics /data/victorialogs
         install -d -o 65534 -g 65534 /data/alertmanager/storage
         chown -R 65534:65534 /data/alertmanager
-        install -d -o 1000 -g 1000 /data/alloy
+        install -d -o 1000 -g 1000 /data/alloy/data
         chown -R 1000:1000 /data/alloy
     volumes:
       - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data:/data
@@ -122,9 +122,11 @@ services:
       - /etc/alloy/config.alloy
       - --storage.path=/var/lib/alloy/data
       - --server.http.listen-addr=0.0.0.0:12345
+      - --disable-reporting
     volumes:
       - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/alloy.alloy:/etc/alloy/config.alloy:ro
-      - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/alloy:/var/lib/alloy/data
+      # Mount the Alloy home dir so remotecfg/storage can create subpaths as uid 1000
+      - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/alloy:/var/lib/alloy
     cap_drop:
       - ALL
     security_opt:
