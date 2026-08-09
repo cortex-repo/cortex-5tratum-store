@@ -16,8 +16,8 @@ version: 1.0.0
 category: Monitoring
 developer: Cortex Monitoring recipe (upstream components retained)
 website: https://grafana.com/oss/grafana/
-repo: https://github.com/REPLACE_OWNER/cortex-5tratum-store
-support: https://github.com/REPLACE_OWNER/cortex-5tratum-store/issues
+repo: https://github.com/valdobruheim/cortex-5tratum-store
+support: https://github.com/valdobruheim/cortex-5tratum-store/issues
 icon: icon.png
 port: 33040
 path: /
