@@ -1,12 +1,14 @@
 id: cortex-monitoring
 name: Cortex Monitoring
-tagline: Open and composable observability and data visualisation
+tagline: Grafana with VictoriaMetrics, logs, Alloy, and Node Exporter
 description: >-
-  Cortex Monitoring is based on the official 5tratStore GLOBAL Grafana recipe.
-  Grafana is an open and composable observability and data visualisation
-  platform. Connect it to Prometheus or another supported data source to build
-  dashboards, explore metrics, logs and traces, and configure alerts.
-version: dev-0.0.1
+  Cortex Monitoring extends the official 5tratStore GLOBAL Grafana recipe with
+  VictoriaMetrics, VictoriaLogs, Grafana Alloy, Node Exporter, and Alertmanager.
+  Grafana keeps APP_HOST: app and port 33012. On first start it installs the
+  VictoriaMetrics metrics and logs plugins, provisions VictoriaMetrics
+  datasources, and loads the Node Exporter Full dashboard (Grafana.com id 1860).
+  Sign in as admin with the OS-generated APP_PASSWORD.
+version: dev-0.0.2
 category: Monitoring
 developer: Grafana Labs and contributors
 website: https://grafana.com/oss/grafana/
@@ -20,33 +22,3 @@ services:
     environment:
       APP_HOST: app
       APP_PORT: 3000
-  init:
-    image: alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
-    restart: "no"
-    user: "0:0"
-    command:
-      - sh
-      - -c
-      - install -d -o 472 -g 0 /var/lib/grafana && chown -R 472:0 /var/lib/grafana
-    volumes:
-      - ${APP_DATA_DIR}/data:/var/lib/grafana
-    security_opt:
-      - no-new-privileges:true
-  app:
-    image: grafana/grafana:13.1.0@sha256:121a7a9ece6dc10b969f1f96eed64b4f07dfac0d0b8abc070f7cb83bbde86f63
-    restart: unless-stopped
-    user: "472:0"
-    environment:
-      GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: ${APP_PASSWORD}
-      GF_USERS_ALLOW_SIGN_UP: "false"
-      GF_ANALYTICS_REPORTING_ENABLED: "false"
-      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
-      GF_LOG_MODE: console
-    volumes:
-      - ${APP_DATA_DIR}/data:/var/lib/grafana
-    security_opt:
-      - no-new-privileges:true
-    depends_on:
-      init:
-        condition: service_completed_successfully

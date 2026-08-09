@@ -1,12 +1,12 @@
 schemaVersion: 1
 status: proposed
 appId: cortex-monitoring
-appVersion: dev-0.0.1
+appVersion: dev-0.0.2
 reviewedAt: ""
 reviewedBy: ""
 upstream:
   sourceUrl: https://github.com/grafana/grafana
-  license: AGPL-3.0-only
+  license: Multi-component (see LICENSES.md)
   licenseEvidence: https://github.com/grafana/grafana/blob/v13.1.0/LICENSE
 delivery:
   mode: direct-upstream-artifact
@@ -36,6 +36,6 @@ security:
   devicesReviewed: true
   networkEndpointsReviewed: true
 notes: >-
-  Custom Store recipe copied from 5tratStore GLOBAL grafana 13.1.0 and rebranded
-  as Cortex Monitoring for local testing. Runtime compose matches the official
-  recipe; only listing id/name/version/port differ. Not self-approved for GLOBAL.
+  Grafana UI matches GLOBAL grafana (APP_HOST: app, port 33012). Stack adds
+  VictoriaMetrics/Logs, Alloy, Node Exporter, Alertmanager. Node Exporter uses
+  read-only host mounts and pid: host. Dashboard 1860 provisioned from Grafana.com.

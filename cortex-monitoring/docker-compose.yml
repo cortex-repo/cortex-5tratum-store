@@ -3,6 +3,7 @@ services:
     environment:
       APP_HOST: app
       APP_PORT: 3000
+
   init:
     image: alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
     restart: "no"
@@ -10,11 +11,20 @@ services:
     command:
       - sh
       - -c
-      - install -d -o 472 -g 0 /var/lib/grafana && chown -R 472:0 /var/lib/grafana
+      - |
+        install -d -o 472 -g 0 /grafana
+        chown -R 472:0 /grafana
+        install -d -o 1000 -g 1000 /appdata/victoriametrics /appdata/victorialogs /appdata/alloy/data
+        chown -R 1000:1000 /appdata/victoriametrics /appdata/victorialogs /appdata/alloy
+        install -d -o 65534 -g 65534 /appdata/alertmanager
+        chown -R 65534:65534 /appdata/alertmanager
     volumes:
-      - ${APP_DATA_DIR}/data:/var/lib/grafana
+      - ${APP_DATA_DIR}/data:/grafana
+      - ${APP_DATA_DIR}:/appdata
     security_opt:
       - no-new-privileges:true
+
+  # Grafana — same base as 5tratStore GLOBAL grafana/, plus plugin + provisioning
   app:
     image: grafana/grafana:13.1.0@sha256:121a7a9ece6dc10b969f1f96eed64b4f07dfac0d0b8abc070f7cb83bbde86f63
     restart: unless-stopped
@@ -26,6 +36,8 @@ services:
       GF_ANALYTICS_REPORTING_ENABLED: "false"
       GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
       GF_LOG_MODE: console
+      GF_PATHS_PROVISIONING: /var/lib/grafana/provisioning
+      GF_INSTALL_PLUGINS: victoriametrics-metrics-datasource,victoriametrics-logs-datasource
     volumes:
       - ${APP_DATA_DIR}/data:/var/lib/grafana
     security_opt:
@@ -33,3 +45,104 @@ services:
     depends_on:
       init:
         condition: service_completed_successfully
+      victoriametrics:
+        condition: service_started
+      victorialogs:
+        condition: service_started
+
+  victoriametrics:
+    image: victoriametrics/victoria-metrics:v1.148.0@sha256:407013e902f9a0ba1d4b2d4c077c47bbaf917c893c52ff39b19efe83a654afda
+    restart: unless-stopped
+    user: "1000:1000"
+    command:
+      - -storageDataPath=/victoria-metrics-data
+      - -retentionPeriod=30d
+      - -selfScrapeInterval=30s
+    volumes:
+      - ${APP_DATA_DIR}/victoriametrics:/victoria-metrics-data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+  victorialogs:
+    image: victoriametrics/victoria-logs:v1.52.0@sha256:47b820890d64c4575a2a0a46415dcd8a4fd59a0f1fcd6a377693d7aea639442e
+    restart: unless-stopped
+    user: "1000:1000"
+    command:
+      - -storageDataPath=/victoria-logs-data
+      - -retentionPeriod=30d
+    volumes:
+      - ${APP_DATA_DIR}/victorialogs:/victoria-logs-data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+  alertmanager:
+    image: quay.io/prometheus/alertmanager:v0.33.1@sha256:9e082985f56f4c8c9f724e18f2288c6708f472e56a5286b8863d080434ea065d
+    restart: unless-stopped
+    user: "65534:65534"
+    command:
+      - --config.file=/etc/alertmanager/alertmanager.yml
+      - --storage.path=/alertmanager
+      - --cluster.listen-address=
+    volumes:
+      - ${APP_DATA_DIR}/data/config/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - ${APP_DATA_DIR}/alertmanager:/alertmanager
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+  alloy:
+    image: grafana/alloy:v1.11.3@sha256:8c7256f412feb9f5f48f9f6f9394dc97ca887f63dea9304f347970ecc1787669
+    restart: unless-stopped
+    user: "1000:1000"
+    command:
+      - run
+      - /etc/alloy/config.alloy
+      - --storage.path=/var/lib/alloy/data
+      - --server.http.listen-addr=0.0.0.0:12345
+      - --disable-reporting
+    volumes:
+      - ${APP_DATA_DIR}/data/config/alloy.alloy:/etc/alloy/config.alloy:ro
+      - ${APP_DATA_DIR}/alloy:/var/lib/alloy
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      victoriametrics:
+        condition: service_started
+      node-exporter:
+        condition: service_started
+
+  node-exporter:
+    image: prom/node-exporter:v1.9.1@sha256:d00a542e409ee618a4edc67da14dd48c5da66726bbd5537ab2af9c1dfc442c8a
+    restart: unless-stopped
+    pid: host
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --path.rootfs=/host/root
+      - --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/host/root:ro,rslave
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
