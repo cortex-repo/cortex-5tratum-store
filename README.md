@@ -9,17 +9,16 @@ Custom [5tratStore](https://github.com/WillItMod/5tratStore-global)-format catal
 
 ## Add this Custom Store
 
-1. Push this repository to GitHub as `cortex-5tratum-store`.
-2. On the node (e.g. `192.168.0.70`), open the App Store → Custom / Community Stores → **Add store**.
-3. Paste:
+1. On the node (e.g. `192.168.0.70`), open the App Store → Custom / Community Stores → **Add store**.
+2. Paste:
 
    ```text
    https://github.com/valdobruheim/cortex-5tratum-store
    ```
 
-4. Install **Cortex Monitoring**.
-5. Open the app and sign in to Grafana as `admin` with the generated app password.
-6. Uninstall duplicate GLOBAL Grafana / VictoriaMetrics / VictoriaLogs / Prometheus apps if you do not want parallel stacks.
+3. Install **Cortex Monitoring**.
+4. Open the app and sign in to Grafana as `admin` with the generated app password.
+5. Uninstall duplicate GLOBAL Grafana / VictoriaMetrics / VictoriaLogs / Prometheus apps if you do not want parallel stacks.
 
 Optional local clone (recipe mirror only; install still goes through the store UI):
 
