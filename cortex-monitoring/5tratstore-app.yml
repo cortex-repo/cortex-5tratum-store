@@ -4,17 +4,11 @@ tagline: Bundled Grafana observability with VictoriaMetrics, VictoriaLogs, and A
 description: >-
   Cortex Monitoring packages Grafana, VictoriaMetrics, VictoriaLogs, Grafana
   Alloy, Prometheus Node Exporter, and Alertmanager as one 5tratumOS app.
-  The store proxy opens Grafana; metrics and logs stay on the internal Docker
-  network. Node Exporter mounts host /proc, /sys, and rootfs read-only so host
-  metrics work. Alloy scrapes Node Exporter and VictoriaMetrics and remote-writes
-  to VictoriaMetrics. Log shipping to VictoriaLogs is metrics-first by default
-  (no Docker socket); extend Alloy config under APP_DATA_DIR when you add sources.
-  Initial Grafana login is `admin` / `cortex` when the OS does not inject
-  APP_PASSWORD (Custom Store default). When APP_PASSWORD is set, that value is
-  used instead and also written to `data/admin-password.txt` under the app data
-  root. Do not install duplicate GLOBAL Grafana or VictoriaMetrics apps on the
-  same node unless you intend to run parallel stacks.
-version: 1.0.4
+  Grafana is wired like the official 5tratStore GLOBAL grafana recipe
+  (APP_HOST: app, no custom ROOT_URL). Initial login is admin with APP_PASSWORD
+  when the OS provides one, otherwise admin/cortex. Password is also written to
+  data/admin-password.txt under the app data root.
+version: 1.0.5
 category: Monitoring
 developer: Cortex Monitoring recipe (upstream components retained)
 website: https://grafana.com/oss/grafana/
@@ -23,12 +17,8 @@ support: https://github.com/cortex-repo/cortex-5tratum-store/issues
 icon: icon.png
 port: 33040
 path: /
-defaultUsername: admin
-defaultPassword: cortex
 services:
   app_proxy:
     environment:
-      APP_HOST: cortex-monitoring_app_1
+      APP_HOST: app
       APP_PORT: 3000
-      PROXY_AUTH_ADD: "false"
-      PROXY_AUTH_WHITELIST: "/api/*"

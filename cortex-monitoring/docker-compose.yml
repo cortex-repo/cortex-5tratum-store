@@ -4,11 +4,8 @@
 services:
   app_proxy:
     environment:
-      # Umbrel-style DNS name used by the OS-injected proxy on many 5tratum builds
-      APP_HOST: cortex-monitoring_app_1
+      APP_HOST: app
       APP_PORT: 3000
-      PROXY_AUTH_ADD: "false"
-      PROXY_AUTH_WHITELIST: "/api/*"
 
   init:
     image: alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
@@ -28,7 +25,6 @@ services:
         chown -R 65534:65534 /data/alertmanager
         install -d -o 1000 -g 1000 /data/alloy/data
         chown -R 1000:1000 /data/alloy
-        # Persist a recoverable copy of the initial admin password for operators
         umask 077
         printf '%s\n' "$${APP_PASSWORD}" > /data/admin-password.txt
         chown 1000:1000 /data/admin-password.txt
@@ -37,18 +33,13 @@ services:
     security_opt:
       - no-new-privileges:true
 
+  # Grafana service mirrors 5tratStore GLOBAL grafana/ (APP_HOST: app, no ROOT_URL overrides)
   app:
     image: grafana/grafana:13.1.0@sha256:121a7a9ece6dc10b969f1f96eed64b4f07dfac0d0b8abc070f7cb83bbde86f63
     restart: unless-stopped
     user: "472:0"
-    networks:
-      default:
-        aliases:
-          - cortex-monitoring_app_1
-          - app
     environment:
       GF_SECURITY_ADMIN_USER: admin
-      # OS APP_PASSWORD when present; otherwise a known Custom Store default
       GF_SECURITY_ADMIN_PASSWORD: ${APP_PASSWORD:-cortex}
       GF_USERS_ALLOW_SIGN_UP: "false"
       GF_ANALYTICS_REPORTING_ENABLED: "false"
@@ -56,18 +47,6 @@ services:
       GF_LOG_MODE: console
       GF_PATHS_PROVISIONING: /etc/grafana/provisioning
       GF_INSTALL_PLUGINS: victoriametrics-logs-datasource
-      GF_UNIFIED_ALERTING_ENABLED: "true"
-      GF_ALERTING_ENABLED: "false"
-      # Allow embedding from the 5tratumOS shell (iframe on /apps/...).
-      GF_SECURITY_COOKIE_SAMESITE: disabled
-      GF_SECURITY_ALLOW_EMBEDDING: "true"
-      GF_LIVE_ALLOWED_ORIGINS: "*"
-      # Canonical public URL is the published app port. Do NOT use /apps/... here:
-      # the OS path is a shell/iframe; Grafana itself is reached at :33040 (and via
-      # app_proxy to container :3000). %(http_port)s is the container listen port
-      # (3000), so it must not be used in ROOT_URL.
-      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:33040/"
-      GF_SERVER_SERVE_FROM_SUB_PATH: "false"
     volumes:
       - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/grafana:/var/lib/grafana
       - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/grafana-provisioning:/etc/grafana/provisioning:ro
