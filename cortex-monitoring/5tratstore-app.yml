@@ -14,7 +14,7 @@ description: >-
   used instead and also written to `data/admin-password.txt` under the app data
   root. Do not install duplicate GLOBAL Grafana or VictoriaMetrics apps on the
   same node unless you intend to run parallel stacks.
-version: 1.0.1
+version: 1.0.2
 category: Monitoring
 developer: Cortex Monitoring recipe (upstream components retained)
 website: https://grafana.com/oss/grafana/
