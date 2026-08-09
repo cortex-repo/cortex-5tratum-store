@@ -1,3 +1,6 @@
+# Persistent data lives under the 5tratumOS apps root:
+#   /var/lib/5tratumos/apps/cortex-monitoring
+# APP_DATA_DIR from the OS is honoured when set; otherwise that path is used.
 services:
   app_proxy:
     environment:
@@ -21,7 +24,7 @@ services:
         install -d -o 1000 -g 1000 /data/alloy
         chown -R 1000:1000 /data/alloy
     volumes:
-      - ${APP_DATA_DIR}/data:/data
+      - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data:/data
     security_opt:
       - no-new-privileges:true
 
@@ -41,9 +44,9 @@ services:
       GF_UNIFIED_ALERTING_ENABLED: "true"
       GF_ALERTING_ENABLED: "false"
     volumes:
-      - ${APP_DATA_DIR}/data/grafana:/var/lib/grafana
-      - ${APP_DATA_DIR}/data/grafana-provisioning:/etc/grafana/provisioning:ro
-      - ${APP_DATA_DIR}/data/dashboards:/var/lib/grafana/dashboards:ro
+      - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/grafana:/var/lib/grafana
+      - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/grafana-provisioning:/etc/grafana/provisioning:ro
+      - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/dashboards:/var/lib/grafana/dashboards:ro
     security_opt:
       - no-new-privileges:true
     depends_on:
@@ -65,7 +68,7 @@ services:
       - -retentionPeriod=30d
       - -selfScrapeInterval=30s
     volumes:
-      - ${APP_DATA_DIR}/data/victoriametrics:/victoria-metrics-data
+      - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/victoriametrics:/victoria-metrics-data
     cap_drop:
       - ALL
     security_opt:
@@ -82,7 +85,7 @@ services:
       - -storageDataPath=/victoria-logs-data
       - -retentionPeriod=30d
     volumes:
-      - ${APP_DATA_DIR}/data/victorialogs:/victoria-logs-data
+      - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/victorialogs:/victoria-logs-data
     cap_drop:
       - ALL
     security_opt:
@@ -100,8 +103,8 @@ services:
       - --storage.path=/alertmanager
       - --cluster.listen-address=
     volumes:
-      - ${APP_DATA_DIR}/data/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
-      - ${APP_DATA_DIR}/data/alertmanager/storage:/alertmanager
+      - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/alertmanager/storage:/alertmanager
     cap_drop:
       - ALL
     security_opt:
@@ -120,8 +123,8 @@ services:
       - --storage.path=/var/lib/alloy/data
       - --server.http.listen-addr=0.0.0.0:12345
     volumes:
-      - ${APP_DATA_DIR}/data/alloy.alloy:/etc/alloy/config.alloy:ro
-      - ${APP_DATA_DIR}/data/alloy:/var/lib/alloy/data
+      - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/alloy.alloy:/etc/alloy/config.alloy:ro
+      - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/alloy:/var/lib/alloy/data
     cap_drop:
       - ALL
     security_opt:

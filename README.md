@@ -46,9 +46,16 @@ Manifests use **`5tratstore-app.yml`** (not `umbrel-app.yml`), matching 5tratSto
 
 ## Persistence
 
-Runtime data uses `${APP_DATA_DIR}` (managed by 5tratumOS). Compose does not hardcode `/home/forge/cortexMonitoring`.
+Host data root is the 5tratumOS apps tree:
 
-Under `${APP_DATA_DIR}/data/`:
+```text
+/var/lib/5tratumos/apps/cortex-monitoring/data/
+```
+
+Compose uses `${APP_DATA_DIR}` when 5tratumOS injects it, otherwise defaults to
+`/var/lib/5tratumos/apps/cortex-monitoring` (not a bare `/var/lib/...` path).
+
+Under that `data/` directory:
 
 - `grafana/`, `victoriametrics/`, `victorialogs/`, `alertmanager/`, `alloy/`
 - `alloy.alloy`, `alertmanager.yml`, `grafana-provisioning/`, `dashboards/`
