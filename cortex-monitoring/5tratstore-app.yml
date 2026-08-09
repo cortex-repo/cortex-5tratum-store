@@ -13,7 +13,7 @@ website: https://grafana.com/oss/grafana/
 repo: https://github.com/grafana/grafana
 support: https://github.com/cortex-repo/cortex-5tratum-store/issues
 icon: https://raw.githubusercontent.com/grafana/grafana/v13.1.0/public/img/grafana_icon.svg
-port: 33040
+port: 33012
 path: /
 services:
   app_proxy:

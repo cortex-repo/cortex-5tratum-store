@@ -12,7 +12,7 @@ Exact runtime copy of the official GLOBAL [grafana](https://github.com/WillItMod
 | name | Cortex Monitoring |
 | version | `dev-0.0.1` |
 | upstream image | `grafana/grafana:13.1.0` |
-| port | `33040` |
+| port | `33012` |
 
 ## Add this Custom Store
 
