@@ -14,7 +14,7 @@ description: >-
   used instead and also written to `data/admin-password.txt` under the app data
   root. Do not install duplicate GLOBAL Grafana or VictoriaMetrics apps on the
   same node unless you intend to run parallel stacks.
-version: 1.0.2
+version: 1.0.3
 category: Monitoring
 developer: Cortex Monitoring recipe (upstream components retained)
 website: https://grafana.com/oss/grafana/
@@ -32,4 +32,4 @@ services:
       APP_HOST: cortex-monitoring_app_1
       APP_PORT: 3000
       PROXY_AUTH_ADD: "false"
-      PROXY_AUTH_WHITELIST: "/api/*"
+      PROXY_AUTH_WHITELIST: "/api/*,/apps/cortex-monitoring/api/*"

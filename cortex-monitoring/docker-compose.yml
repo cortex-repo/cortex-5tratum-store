@@ -8,7 +8,7 @@ services:
       APP_HOST: cortex-monitoring_app_1
       APP_PORT: 3000
       PROXY_AUTH_ADD: "false"
-      PROXY_AUTH_WHITELIST: "/api/*"
+      PROXY_AUTH_WHITELIST: "/api/*,/apps/cortex-monitoring/api/*"
 
   init:
     image: alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
@@ -61,10 +61,9 @@ services:
       # Allow opening from the 5tratumOS UI (iframe / reverse proxy)
       GF_SECURITY_COOKIE_SAMESITE: disabled
       GF_SECURITY_ALLOW_EMBEDDING: "true"
-      # Do NOT hardcode 127.0.0.1 — that breaks asset loading when opened via LAN IP or OS proxy.
-      # Placeholders are interpreted by Grafana from the incoming request.
-      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:%(http_port)s/"
-      GF_SERVER_SERVE_FROM_SUB_PATH: "false"
+      # 5tratumOS serves the app UI under /apps/cortex-monitoring/
+      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s/apps/cortex-monitoring/"
+      GF_SERVER_SERVE_FROM_SUB_PATH: "true"
       GF_LIVE_ALLOWED_ORIGINS: "*"
     volumes:
       - ${APP_DATA_DIR:-/var/lib/5tratumos/apps/cortex-monitoring}/data/grafana:/var/lib/grafana
