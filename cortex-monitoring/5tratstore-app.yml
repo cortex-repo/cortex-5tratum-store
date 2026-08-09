@@ -1,0 +1,28 @@
+id: cortex-monitoring
+name: Cortex Monitoring
+tagline: Bundled Grafana observability with VictoriaMetrics, VictoriaLogs, and Alloy
+description: >-
+  Cortex Monitoring packages Grafana, VictoriaMetrics, VictoriaLogs, Grafana
+  Alloy, Prometheus Node Exporter, and Alertmanager as one 5tratumOS app.
+  The store proxy opens Grafana; metrics and logs stay on the internal Docker
+  network. Node Exporter mounts host /proc, /sys, and rootfs read-only so host
+  metrics work. Alloy scrapes Node Exporter and VictoriaMetrics and remote-writes
+  to VictoriaMetrics. Log shipping to VictoriaLogs is metrics-first by default
+  (no Docker socket); extend Alloy config under APP_DATA_DIR when you add sources.
+  Initial Grafana admin password is the generated APP_PASSWORD. Do not install
+  duplicate GLOBAL Grafana or VictoriaMetrics apps on the same node unless you
+  intend to run parallel stacks.
+version: 1.0.0
+category: Monitoring
+developer: Cortex Monitoring recipe (upstream components retained)
+website: https://grafana.com/oss/grafana/
+repo: https://github.com/REPLACE_OWNER/cortex-5tratum-store
+support: https://github.com/REPLACE_OWNER/cortex-5tratum-store/issues
+icon: icon.png
+port: 33040
+path: /
+services:
+  app_proxy:
+    environment:
+      APP_HOST: app
+      APP_PORT: 3000

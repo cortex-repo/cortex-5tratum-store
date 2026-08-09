@@ -1,0 +1,14 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: default
+  group_by: ["alertname"]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 12h
+
+receivers:
+  - name: default
+    # Local stub: alerts are visible in Alertmanager UI / Grafana.
+    # Add webhook, email, or ntfy receivers under APP_DATA_DIR when ready.

@@ -1,0 +1,44 @@
+schemaVersion: 1
+status: proposed
+appId: cortex-monitoring
+appVersion: 1.0.0
+reviewedAt: ""
+reviewedBy: ""
+upstream:
+  sourceUrl: https://github.com/grafana/grafana
+  license: Multi-component (see LICENSES.md)
+  licenseEvidence: https://github.com/grafana/grafana/blob/v13.1.0/LICENSE
+delivery:
+  mode: direct-upstream-artifact
+  storePayload: recipe-only
+  mirrorsThirdPartyPayload: false
+rights:
+  packageOriginal: true
+  softwareDistributionCleared: false
+  containerUseCleared: false
+  listingTextCleared: true
+  artworkCleared: true
+  noticesIncluded: true
+compatibility:
+  osVersions:
+    - pending-maintainer-test
+  architectures:
+    - amd64
+  installTested: false
+  startTested: false
+  updateTested: false
+  uninstallTested: false
+security:
+  privileged: false
+  hostNetwork: false
+  dockerSocket: false
+  hostMountsReviewed: true
+  devicesReviewed: true
+  networkEndpointsReviewed: true
+notes: >-
+  Bundled multi-service monitoring recipe for Custom Store use. Node Exporter
+  requires read-only host mounts of /proc, /sys, and / (as /host/root) plus
+  pid: host. No privileged mode and no Docker socket. Alloy does not mount the
+  Docker socket; log pipelines to VictoriaLogs must be added by the operator.
+  Maintainer lifecycle testing and rights clearance are still required before
+  any GLOBAL approval.

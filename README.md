@@ -1,0 +1,69 @@
+# Cortex 5tratum Store
+
+Custom [5tratStore](https://github.com/WillItMod/5tratStore-global)-format catalogue for Cortex apps on 5tratumOS.
+
+**Repo:** `cortex-5tratum-store`  
+**Stack in this store:** Grafana · VictoriaMetrics · VictoriaLogs · Alloy · Node Exporter · Alertmanager (bundled as **Cortex Monitoring**)
+
+5tratumOS keeps **port 80**. The app is opened through the OS proxy into Grafana. There is no standalone nginx portal.
+
+## Add this Custom Store
+
+1. Push this repository to GitHub as `cortex-5tratum-store`.
+2. On the node (e.g. `192.168.0.70`), open the App Store → Custom / Community Stores → **Add store**.
+3. Paste:
+
+   ```text
+   https://github.com/<OWNER>/cortex-5tratum-store
+   ```
+
+4. Install **Cortex Monitoring**.
+5. Open the app and sign in to Grafana as `admin` with the generated app password.
+6. Uninstall duplicate GLOBAL Grafana / VictoriaMetrics / VictoriaLogs / Prometheus apps if you do not want parallel stacks.
+
+Optional local clone (recipe mirror only; install still goes through the store UI):
+
+```bash
+sudo mkdir -p /home/forge/cortexMonitoring
+sudo git clone https://github.com/<OWNER>/cortex-5tratum-store.git /home/forge/cortexMonitoring
+```
+
+## Layout
+
+```text
+.
+├── 5tratstore-store.yml      # store id/name
+├── README.md
+└── cortex-monitoring/
+    ├── 5tratstore-app.yml
+    ├── 5tratstore-review.yml # status: proposed
+    ├── LICENSES.md
+    ├── docker-compose.yml
+    ├── icon.png
+    └── data/
+```
+
+Manifests use **`5tratstore-app.yml`** (not `umbrel-app.yml`), matching 5tratStore GLOBAL.
+
+## Persistence
+
+Runtime data uses `${APP_DATA_DIR}` (managed by 5tratumOS). Compose does not hardcode `/home/forge/cortexMonitoring`.
+
+Under `${APP_DATA_DIR}/data/`:
+
+- `grafana/`, `victoriametrics/`, `victorialogs/`, `alertmanager/`, `alloy/`
+- `alloy.alloy`, `alertmanager.yml`, `grafana-provisioning/`, `dashboards/`
+
+## Privileges (Node Exporter)
+
+Read-only host mounts: `/proc`, `/sys`, `/` (as `/host/root`), plus `pid: host`. No `privileged: true`, no Docker socket. Alloy is metrics-first; log shipping to VictoriaLogs is commented in `data/alloy.alloy`.
+
+## First start
+
+- Datasources: VictoriaMetrics (default), VictoriaLogs, Alertmanager
+- Dashboard: Host overview
+- Alloy scrapes Node Exporter / VictoriaMetrics / self → remote_write to VictoriaMetrics
+
+## GLOBAL
+
+`5tratstore-review.yml` stays `status: proposed` until a maintainer clears rights and lifecycle tests for any GLOBAL submission.
