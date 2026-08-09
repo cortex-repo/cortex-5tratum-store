@@ -13,7 +13,7 @@ Custom [5tratStore](https://github.com/WillItMod/5tratStore-global)-format catal
 2. Paste:
 
    ```text
-   https://github.com/valdobruheim/cortex-5tratum-store
+   https://github.com/cortex-repo/cortex-5tratum-store
    ```
 
 3. Install **Cortex Monitoring**.
@@ -24,7 +24,7 @@ Optional local clone (recipe mirror only; install still goes through the store U
 
 ```bash
 sudo mkdir -p /home/forge/cortexMonitoring
-sudo git clone https://github.com/valdobruheim/cortex-5tratum-store.git /home/forge/cortexMonitoring
+sudo git clone https://github.com/cortex-repo/cortex-5tratum-store.git /home/forge/cortexMonitoring
 ```
 
 ## Layout
