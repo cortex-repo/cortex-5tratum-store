@@ -115,7 +115,8 @@ services:
   alloy:
     image: grafana/alloy:v1.11.3@sha256:8c7256f412feb9f5f48f9f6f9394dc97ca887f63dea9304f347970ecc1787669
     restart: unless-stopped
-    user: "1000:1000"
+    # Root is required to read /var/run/docker.sock for container log collection
+    user: "0:0"
     command:
       - run
       - /etc/alloy/config.alloy
@@ -125,14 +126,15 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/config/alloy.alloy:/etc/alloy/config.alloy:ro
       - ${APP_DATA_DIR}/alloy:/var/lib/alloy
-    cap_drop:
-      - ALL
+      - /var/run/docker.sock:/var/run/docker.sock
     security_opt:
       - no-new-privileges:true
     depends_on:
       init:
         condition: service_completed_successfully
       victoriametrics:
+        condition: service_started
+      victorialogs:
         condition: service_started
       node-exporter:
         condition: service_started

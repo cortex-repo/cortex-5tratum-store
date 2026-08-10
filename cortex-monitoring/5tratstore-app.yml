@@ -7,10 +7,12 @@ description: >-
   Grafana keeps APP_HOST: app and port 33012. On first start it installs the
   VictoriaMetrics metrics and logs plugins, provisions VictoriaMetrics
   datasources, and loads the Node Exporter Full dashboard (Grafana.com id 1860).
-  Sign in as admin with the OS-generated APP_PASSWORD (fallback `cortex` if
-  unset). The password is also written to
-  `/var/lib/5tratumos/apps/cortex-monitoring/admin-password.txt` on start.
-version: dev-0.0.3
+  Victoria Exporter Full dashboard. Alloy mounts the Docker socket to ship all
+  container logs into VictoriaLogs for Grafana Explore. Sign in as admin with
+  the OS-generated APP_PASSWORD (fallback `cortex` if unset). The password is
+  also written to `/var/lib/5tratumos/apps/cortex-monitoring/admin-password.txt`
+  on start.
+version: dev-0.0.4
 category: Monitoring
 developer: Grafana Labs and contributors
 website: https://grafana.com/oss/grafana/

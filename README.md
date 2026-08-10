@@ -2,7 +2,7 @@
 
 Custom [5tratStore](https://github.com/WillItMod/5tratStore-global)-format catalogue.
 
-## Cortex Monitoring (`dev-0.0.3`)
+## Cortex Monitoring (`dev-0.0.4`)
 
 Official GLOBAL Grafana wiring (`APP_HOST: app`, port `33012`) plus:
 
@@ -11,6 +11,7 @@ Official GLOBAL Grafana wiring (`APP_HOST: app`, port `33012`) plus:
 - VictoriaMetrics metrics/logs Grafana plugins
 - Provisioned datasources
 - [Node Exporter Full](https://grafana.com/grafana/dashboards/1860-node-exporter-full/) dashboard (id 1860)
+- **All Docker container logs** shipped by Alloy → VictoriaLogs (Explore in Grafana with the VictoriaLogs datasource)
 
 ## Password
 
@@ -36,7 +37,7 @@ docker exec -it "$(docker ps --format '{{.Names}}' | grep -E 'cortex-monitoring.
 ## Install
 
 1. Add Custom Store: `https://github.com/cortex-repo/cortex-5tratum-store`
-2. Install **Cortex Monitoring** `dev-0.0.3`
+2. Install **Cortex Monitoring** `dev-0.0.4`
 3. Login with the password methods above
 
 If upgrading from a broken earlier build:

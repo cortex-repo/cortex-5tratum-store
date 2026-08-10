@@ -25,3 +25,5 @@ adds VictoriaMetrics stack components. Images are pulled directly from upstream.
   https://raw.githubusercontent.com/grafana/grafana/v13.1.0/public/img/grafana_icon.svg
 
 Node Exporter mounts host `/proc`, `/sys`, and `/` read-only and uses `pid: host`.
+Alloy mounts `/var/run/docker.sock` and runs as root to collect logs from all
+Docker containers into VictoriaLogs.
