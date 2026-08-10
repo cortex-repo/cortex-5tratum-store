@@ -46,6 +46,8 @@ services:
       GF_LOG_MODE: console
       GF_PATHS_PROVISIONING: /var/lib/grafana/provisioning
       GF_INSTALL_PLUGINS: victoriametrics-metrics-datasource,victoriametrics-logs-datasource
+    ports:
+      - "3000:3000"
     volumes:
       - ${APP_DATA_DIR}/data:/var/lib/grafana
     security_opt:

@@ -4,20 +4,21 @@ tagline: Grafana with VictoriaMetrics, logs, Alloy, and Node Exporter
 description: >-
   Cortex Monitoring extends the official 5tratStore GLOBAL Grafana recipe with
   VictoriaMetrics, VictoriaLogs, Grafana Alloy, Node Exporter, and Alertmanager.
-  Grafana uses APP_HOST: app on port 33012. Companion UIs/APIs are published on
+  Grafana uses APP_HOST: app on the default Grafana port 3000 (direct access;
+  5tratumOS store install unchanged). Companion UIs/APIs are published on
   upstream ports: VictoriaMetrics 8428, VictoriaLogs 9428, Alertmanager 9093,
   Alloy 12345, Node Exporter 9100. Plugins, datasources, Node Exporter Full
   dashboard (1860), and Docker log shipping to VictoriaLogs are included. Login
   is admin with APP_PASSWORD (fallback cortex); also written to
   admin-password.txt under the app data root.
-version: dev-0.0.5
+version: dev-0.0.6
 category: Monitoring
 developer: Grafana Labs and contributors
 website: https://grafana.com/oss/grafana/
 repo: https://github.com/grafana/grafana
 support: https://github.com/cortex-repo/cortex-5tratum-store/issues
 icon: https://raw.githubusercontent.com/grafana/grafana/v13.1.0/public/img/grafana_icon.svg
-port: 33012
+port: 3000
 path: /
 services:
   app_proxy:
