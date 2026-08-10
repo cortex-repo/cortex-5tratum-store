@@ -66,6 +66,8 @@ services:
       - -storageDataPath=/victoria-metrics-data
       - -retentionPeriod=30d
       - -selfScrapeInterval=30s
+    ports:
+      - "8428:8428"
     volumes:
       - ${APP_DATA_DIR}/victoriametrics:/victoria-metrics-data
     cap_drop:
@@ -83,6 +85,8 @@ services:
     command:
       - -storageDataPath=/victoria-logs-data
       - -retentionPeriod=30d
+    ports:
+      - "9428:9428"
     volumes:
       - ${APP_DATA_DIR}/victorialogs:/victoria-logs-data
     cap_drop:
@@ -101,6 +105,8 @@ services:
       - --config.file=/etc/alertmanager/alertmanager.yml
       - --storage.path=/alertmanager
       - --cluster.listen-address=
+    ports:
+      - "9093:9093"
     volumes:
       - ${APP_DATA_DIR}/data/config/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
       - ${APP_DATA_DIR}/alertmanager:/alertmanager
@@ -123,6 +129,8 @@ services:
       - --storage.path=/var/lib/alloy/data
       - --server.http.listen-addr=0.0.0.0:12345
       - --disable-reporting
+    ports:
+      - "12345:12345"
     volumes:
       - ${APP_DATA_DIR}/data/config/alloy.alloy:/etc/alloy/config.alloy:ro
       - ${APP_DATA_DIR}/alloy:/var/lib/alloy
@@ -148,6 +156,8 @@ services:
       - --path.sysfs=/host/sys
       - --path.rootfs=/host/root
       - --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+    ports:
+      - "9100:9100"
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
