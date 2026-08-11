@@ -152,19 +152,28 @@ services:
   node-exporter:
     image: prom/node-exporter:v1.9.1@sha256:d00a542e409ee618a4edc67da14dd48c5da66726bbd5537ab2af9c1dfc442c8a
     restart: unless-stopped
+    # Root improves access for systemd/dbus, ethtool, and processes collectors
+    user: "0:0"
     pid: host
     command:
       - --path.procfs=/host/proc
       - --path.sysfs=/host/sys
       - --path.rootfs=/host/root
       - --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+      # Disabled-by-default collectors required by Node Exporter Full panels
+      - --collector.processes
+      - --collector.systemd
+      - --collector.tcpstat
+      - --collector.interrupts
+      - --collector.ethtool
+      - --collector.hwmon
+      - --collector.powersupplyclass
     ports:
       - "9100:9100"
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /:/host/root:ro,rslave
-    cap_drop:
-      - ALL
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket:ro
     security_opt:
       - no-new-privileges:true

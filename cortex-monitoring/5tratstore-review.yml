@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: cortex-monitoring
-appVersion: dev-0.0.6
+appVersion: dev-0.0.7
 reviewedAt: ""
 reviewedBy: ""
 upstream:
@@ -36,8 +36,10 @@ security:
   devicesReviewed: true
   networkEndpointsReviewed: true
 notes: >-
-  Grafana UI matches GLOBAL grafana (APP_HOST: app, port 33012). Stack adds
+  Grafana UI matches GLOBAL grafana (APP_HOST: app, port 3000). Stack adds
   VictoriaMetrics/Logs, Alloy, Node Exporter, Alertmanager. Node Exporter uses
-  read-only host mounts and pid: host. Alloy mounts /var/run/docker.sock (runs
-  as root) to collect all container logs into VictoriaLogs. Dashboard 1860
-  provisioned from Grafana.com.
+  read-only host mounts, pid: host, root user, and D-Bus for systemd; enables
+  processes/systemd/tcpstat/interrupts/ethtool collectors. Alloy mounts
+  /var/run/docker.sock (runs as root) for container logs into VictoriaLogs.
+  Fan/PSU panels need host hwmon or power_supply sysfs; many servers have none
+  without IPMI.

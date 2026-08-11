@@ -2,10 +2,18 @@
 
 Custom [5tratStore](https://github.com/WillItMod/5tratStore-global)-format catalogue.
 
-## Cortex Monitoring (`dev-0.0.6`)
+## Cortex Monitoring (`dev-0.0.7`)
 
 Installed via the 5tratumOS Custom Store. Grafana is opened directly on the
 default port **3000** (portal embedding optional).
+
+Node Exporter collectors enabled for Node Exporter Full: `processes`, `systemd`
+(+ D-Bus), `tcpstat`, `interrupts`, `ethtool`, `hwmon`, `powersupplyclass`.
+
+**Note:** Fan Speed / Power Supply panels only show data if the host exposes
+them via `/sys` (hwmon / power_supply). Many chassis (including some mining
+boxes) do not; those need IPMI or vendor tools, which the stock node_exporter
+image does not include.
 
 ### Direct ports (LAN checks)
 
@@ -52,7 +60,7 @@ docker exec -it "$(docker ps --format '{{.Names}}' | grep -E 'cortex-monitoring.
 ## Install
 
 1. Add Custom Store: `https://github.com/cortex-repo/cortex-5tratum-store`
-2. Install **Cortex Monitoring** `dev-0.0.6`
+2. Install **Cortex Monitoring** `dev-0.0.7`
 3. Login with the password methods above
 
 If upgrading from a broken earlier build:

@@ -11,7 +11,7 @@ description: >-
   dashboard (1860), and Docker log shipping to VictoriaLogs are included. Login
   is admin with APP_PASSWORD (fallback cortex); also written to
   admin-password.txt under the app data root.
-version: dev-0.0.6
+version: dev-0.0.7
 category: Monitoring
 developer: Grafana Labs and contributors
 website: https://grafana.com/oss/grafana/
