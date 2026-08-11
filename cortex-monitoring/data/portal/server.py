@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import mimetypes
+import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -14,7 +15,7 @@ ROOT = Path(__file__).resolve().parent
 STATIC = ROOT / "static"
 
 # Keep in sync with 5tratstore-app.yml and docker-compose image tags.
-CORTEX_VERSION = "dev-0.0.9"
+CORTEX_VERSION = "dev-0.0.10"
 
 LINKS = [
     {
@@ -74,12 +75,52 @@ LINKS = [
 ]
 
 
-def render_page() -> bytes:
+def _strip_host_port(value: str) -> str:
+    value = value.strip()
+    if not value:
+        return ""
+    if value.startswith("["):
+        end = value.find("]")
+        return value[1:end] if end != -1 else value
+    # host:port — avoid splitting IPv6 without brackets
+    if value.count(":") == 1:
+        return value.split(":", 1)[0]
+    return value
+
+
+def resolve_public_host(headers: dict[str, str] | None = None) -> str:
+    """Prefer an explicit LAN IP, then proxy/request host."""
+    for key in ("HOST_IP", "DEVICE_HOST_IP", "DEVICE_IP", "LAN_IP"):
+        env = os.environ.get(key, "").strip()
+        if env:
+            return _strip_host_port(env)
+
+    headers = headers or {}
+    for key in ("X-Forwarded-Host", "Host"):
+        raw = headers.get(key, "")
+        if not raw:
+            continue
+        candidate = _strip_host_port(raw.split(",")[0])
+        if candidate and candidate.lower() not in {"localhost", "127.0.0.1", "::1"}:
+            return candidate
+
+    host = _strip_host_port((headers or {}).get("Host", ""))
+    return host or "127.0.0.1"
+
+
+def tool_url(host: str, port: int, path: str) -> str:
+    if not path.startswith("/"):
+        path = "/" + path
+    return f"http://{host}:{port}{path}"
+
+
+def render_page(host: str) -> bytes:
     cards = []
     for item in LINKS:
+        url = tool_url(host, item["port"], item["path"])
         cards.append(
             f"""
-            <a class="card" id="link-{item['id']}" href="#" target="_blank" rel="noopener noreferrer"
+            <a class="card" id="link-{item['id']}" href="{url}" target="_blank" rel="noopener noreferrer"
                data-port="{item['port']}" data-path="{item['path']}">
               <div class="card-top">
                 <img class="icon" src="{item['icon']}" alt="" width="40" height="40" />
@@ -87,7 +128,7 @@ def render_page() -> bytes:
               </div>
               <div class="name">{item['name']}</div>
               <div class="blurb">{item['blurb']}</div>
-              <div class="meta">:<span class="port">{item['port']}</span>{item['path']}</div>
+              <div class="meta">{url}</div>
             </a>
             """
         )
@@ -235,7 +276,13 @@ def render_page() -> bytes:
       padding-top: 12px;
       border-top: 1px solid var(--line);
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
+      color: var(--accent);
+      word-break: break-all;
+    }}
+    .lede code {{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
       color: var(--accent);
     }}
     footer {{
@@ -254,7 +301,8 @@ def render_page() -> bytes:
       </div>
       <h1>Observability portal</h1>
       <p class="lede">
-        Open each tool in a new tab. Links use this host&rsquo;s address automatically.
+        Open each tool in a new tab. Links use
+        <code>http://&lt;host-ip&gt;:&lt;port&gt;</code> for this machine.
       </p>
     </div>
     <div class="grid">
@@ -264,11 +312,18 @@ def render_page() -> bytes:
   </main>
   <script>
     (function () {{
-      var host = window.location.hostname || "127.0.0.1";
+      var fallback = {json.dumps(host)};
+      var host = window.location.hostname || fallback || "127.0.0.1";
+      if (!host || host === "localhost" || host === "127.0.0.1") {{
+        host = fallback || host;
+      }}
       document.querySelectorAll("a.card").forEach(function (el) {{
         var port = el.getAttribute("data-port");
         var path = el.getAttribute("data-path") || "/";
-        el.href = "http://" + host + ":" + port + path;
+        var url = "http://" + host + ":" + port + path;
+        el.href = url;
+        var meta = el.querySelector(".meta");
+        if (meta) meta.textContent = url;
       }});
     }})();
   </script>
@@ -302,7 +357,8 @@ class Handler(BaseHTTPRequestHandler):
         path = self.path.split("?", 1)[0]
 
         if path in ("/", "/index.html"):
-            body = render_page()
+            host = resolve_public_host({k: v for k, v in self.headers.items()})
+            body = render_page(host)
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
             self.send_header("Content-Length", str(len(body)))
@@ -321,7 +377,15 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         if path == "/api/links":
-            payload = {"cortex_version": CORTEX_VERSION, "links": LINKS}
+            host = resolve_public_host({k: v for k, v in self.headers.items()})
+            links = [
+                {
+                    **item,
+                    "url": tool_url(host, item["port"], item["path"]),
+                }
+                for item in LINKS
+            ]
+            payload = {"cortex_version": CORTEX_VERSION, "host": host, "links": links}
             body = json.dumps(payload).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json")

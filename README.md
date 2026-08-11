@@ -2,7 +2,7 @@
 
 Custom [5tratStore](https://github.com/WillItMod/5tratStore-global)-format catalogue.
 
-## Cortex Monitoring (`dev-0.0.9`)
+## Cortex Monitoring (`dev-0.0.10`)
 
 Installed via the 5tratumOS Custom Store. The store app opens a **Python portal**
 (not Grafana). Each tool link opens in a **new browser tab**.
@@ -44,7 +44,7 @@ docker exec -it "$(docker ps --format '{{.Names}}' | grep -E 'cortex-monitoring.
 ## Install
 
 1. Add Custom Store: `https://github.com/cortex-repo/cortex-5tratum-store`
-2. Install **Cortex Monitoring** `dev-0.0.9`
+2. Install **Cortex Monitoring** `dev-0.0.10`
 3. Open the app in 5tratumOS → portal → click through to tools
 
 If upgrading from an older build and the portal files are missing:

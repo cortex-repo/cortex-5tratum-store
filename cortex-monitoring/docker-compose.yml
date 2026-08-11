@@ -39,6 +39,9 @@ services:
     user: "1000:1000"
     working_dir: /portal
     command: ["python", "/portal/server.py"]
+    environment:
+      # Optional override when the browser host is localhost (e.g. SSH tunnel).
+      HOST_IP: ${HOST_IP:-${DEVICE_HOST_IP:-}}
     ports:
       - "8080:8080"
     volumes:
