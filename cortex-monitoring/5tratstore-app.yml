@@ -7,10 +7,11 @@ description: >-
   VictoriaLogs, Alertmanager, Alloy, and Node Exporter cards with icons, tool
   versions, and http://host-ip:port links that open in a new browser tab.
   Grafana remains on port 3000 for direct access. Stack includes VictoriaMetrics
-  plugins, Node Exporter Full dashboard (1860), and Docker log shipping to
-  VictoriaLogs. Login for Grafana is admin with APP_PASSWORD (fallback cortex);
-  also written to admin-password.txt.
-version: dev-0.0.10
+  plugins, Node Exporter Full dashboard (1860), APU Power dashboard (RAPL +
+  GPU hwmon), and Docker log shipping to VictoriaLogs. Login for Grafana is
+  admin with APP_PASSWORD (fallback cortex); also written to
+  admin-password.txt.
+version: dev-0.0.11
 category: Monitoring
 developer: Cortex Monitoring
 website: https://github.com/cortex-repo/cortex-5tratum-store

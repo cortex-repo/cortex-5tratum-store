@@ -2,7 +2,7 @@
 
 Custom [5tratStore](https://github.com/WillItMod/5tratStore-global)-format catalogue.
 
-## Cortex Monitoring (`dev-0.0.10`)
+## Cortex Monitoring (`dev-0.0.11`)
 
 Installed via the 5tratumOS Custom Store. The store app opens a **Python portal**
 (not Grafana). Each tool link opens in a **new browser tab**.
@@ -22,8 +22,13 @@ Installed via the 5tratumOS Custom Store. The store app opens a **Python portal*
 Node Exporter collectors enabled for Node Exporter Full: `processes`, `systemd`
 (+ D-Bus), `tcpstat`, `interrupts`, `ethtool`, `hwmon`, `powersupplyclass`.
 
+Provisioned dashboards (Grafana → Cortex Monitoring folder):
+- **Node Exporter Full** (1860)
+- **APU Power** — RAPL package/core watts + GPU hwmon watts
+
 **Note:** Fan Speed / Power Supply panels only show data if the host exposes
-them via `/sys` (hwmon / power_supply).
+them via `/sys` (hwmon / power_supply). On AMD mini PCs such as the Minisforum
+AI X1 Pro, use **APU Power** for package/core/GPU watts (RAPL + amdgpu).
 
 ## Password
 
@@ -44,7 +49,7 @@ docker exec -it "$(docker ps --format '{{.Names}}' | grep -E 'cortex-monitoring.
 ## Install
 
 1. Add Custom Store: `https://github.com/cortex-repo/cortex-5tratum-store`
-2. Install **Cortex Monitoring** `dev-0.0.10`
+2. Install **Cortex Monitoring** `dev-0.0.11`
 3. Open the app in 5tratumOS → portal → click through to tools
 
 If upgrading from an older build and the portal files are missing:
