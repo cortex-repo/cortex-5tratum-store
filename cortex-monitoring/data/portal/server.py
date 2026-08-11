@@ -4,10 +4,17 @@
 from __future__ import annotations
 
 import json
+import mimetypes
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
 
 HOST = "0.0.0.0"
 PORT = 8080
+ROOT = Path(__file__).resolve().parent
+STATIC = ROOT / "static"
+
+# Keep in sync with 5tratstore-app.yml and docker-compose image tags.
+CORTEX_VERSION = "dev-0.0.9"
 
 LINKS = [
     {
@@ -16,6 +23,8 @@ LINKS = [
         "blurb": "Dashboards, Explore, and alerts",
         "port": 3000,
         "path": "/",
+        "version": "13.1.0",
+        "icon": "/static/icons/grafana.svg",
     },
     {
         "id": "victoriametrics",
@@ -23,6 +32,8 @@ LINKS = [
         "blurb": "Metrics TSDB and VMUI",
         "port": 8428,
         "path": "/vmui/",
+        "version": "v1.148.0",
+        "icon": "/static/icons/victoriametrics.svg",
     },
     {
         "id": "victorialogs",
@@ -30,6 +41,8 @@ LINKS = [
         "blurb": "Log store and VMUI",
         "port": 9428,
         "path": "/select/vmui/",
+        "version": "v1.52.0",
+        "icon": "/static/icons/victorialogs.svg",
     },
     {
         "id": "alertmanager",
@@ -37,6 +50,8 @@ LINKS = [
         "blurb": "Alert routing and silences",
         "port": 9093,
         "path": "/",
+        "version": "v0.33.1",
+        "icon": "/static/icons/alertmanager.svg",
     },
     {
         "id": "alloy",
@@ -44,6 +59,8 @@ LINKS = [
         "blurb": "Collector UI and status",
         "port": 12345,
         "path": "/",
+        "version": "v1.11.3",
+        "icon": "/static/icons/alloy.svg",
     },
     {
         "id": "node-exporter",
@@ -51,6 +68,8 @@ LINKS = [
         "blurb": "Host metrics endpoint",
         "port": 9100,
         "path": "/metrics",
+        "version": "v1.9.1",
+        "icon": "/static/icons/node-exporter.svg",
     },
 ]
 
@@ -62,6 +81,10 @@ def render_page() -> bytes:
             f"""
             <a class="card" id="link-{item['id']}" href="#" target="_blank" rel="noopener noreferrer"
                data-port="{item['port']}" data-path="{item['path']}">
+              <div class="card-top">
+                <img class="icon" src="{item['icon']}" alt="" width="40" height="40" />
+                <span class="version">{item['version']}</span>
+              </div>
               <div class="name">{item['name']}</div>
               <div class="blurb">{item['blurb']}</div>
               <div class="meta">:<span class="port">{item['port']}</span>{item['path']}</div>
@@ -74,28 +97,31 @@ def render_page() -> bytes:
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
   <title>Cortex Monitoring</title>
   <style>
     :root {{
-      --bg0: #0e1c20;
-      --bg1: #143038;
-      --panel: #1a3d46;
-      --text: #e7f3f1;
-      --muted: #9cb5b3;
-      --accent: #3ea896;
-      --accent-dim: #2c7d70;
-      --line: rgba(231, 243, 241, 0.12);
+      --bg0: #05070a;
+      --bg1: #0a0f14;
+      --panel: #121820;
+      --panel-hover: #18212c;
+      --text: #e8eef4;
+      --muted: #8b98a8;
+      --accent: #3dd6c6;
+      --accent-dim: #1f8f84;
+      --line: rgba(232, 238, 244, 0.08);
+      --chip: rgba(61, 214, 198, 0.12);
     }}
     * {{ box-sizing: border-box; }}
     body {{
       margin: 0;
       min-height: 100vh;
-      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-family: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(1200px 600px at 10% -10%, rgba(62, 168, 150, 0.22), transparent 55%),
-        radial-gradient(900px 500px at 100% 0%, rgba(20, 80, 90, 0.45), transparent 50%),
-        linear-gradient(160deg, var(--bg0), var(--bg1) 55%, #10262c);
+        radial-gradient(900px 480px at 8% -8%, rgba(61, 214, 198, 0.12), transparent 55%),
+        radial-gradient(700px 420px at 100% 0%, rgba(40, 70, 110, 0.22), transparent 50%),
+        linear-gradient(165deg, var(--bg0), var(--bg1) 50%, #070b10);
     }}
     main {{
       max-width: 980px;
@@ -105,8 +131,14 @@ def render_page() -> bytes:
     .brand {{
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 36px;
+    }}
+    .brand-row {{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
     }}
     .eyebrow {{
       letter-spacing: 0.16em;
@@ -114,6 +146,19 @@ def render_page() -> bytes:
       font-size: 12px;
       color: var(--accent);
       font-weight: 600;
+    }}
+    .app-version {{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--chip);
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
     }}
     h1 {{
       margin: 0;
@@ -137,7 +182,7 @@ def render_page() -> bytes:
       display: block;
       text-decoration: none;
       color: inherit;
-      background: linear-gradient(180deg, rgba(62, 168, 150, 0.08), transparent 40%), var(--panel);
+      background: linear-gradient(180deg, rgba(61, 214, 198, 0.05), transparent 42%), var(--panel);
       border: 1px solid var(--line);
       border-radius: 16px;
       padding: 18px 18px 16px;
@@ -145,8 +190,34 @@ def render_page() -> bytes:
     }}
     .card:hover {{
       transform: translateY(-2px);
-      border-color: rgba(62, 168, 150, 0.55);
-      background: linear-gradient(180deg, rgba(62, 168, 150, 0.16), transparent 45%), #1e4852;
+      border-color: rgba(61, 214, 198, 0.4);
+      background: linear-gradient(180deg, rgba(61, 214, 198, 0.1), transparent 45%), var(--panel-hover);
+    }}
+    .card-top {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }}
+    .icon {{
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #0a0e13;
+      border: 1px solid var(--line);
+      object-fit: contain;
+      padding: 4px;
+    }}
+    .version {{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 9px;
+      white-space: nowrap;
     }}
     .name {{
       font-size: 1.15rem;
@@ -177,7 +248,10 @@ def render_page() -> bytes:
 <body>
   <main>
     <div class="brand">
-      <div class="eyebrow">Cortex Monitoring</div>
+      <div class="brand-row">
+        <div class="eyebrow">Cortex Monitoring</div>
+        <span class="app-version">{CORTEX_VERSION}</span>
+      </div>
       <h1>Observability portal</h1>
       <p class="lede">
         Open each tool in a new tab. Links use this host&rsquo;s address automatically.
@@ -186,7 +260,7 @@ def render_page() -> bytes:
     <div class="grid">
       {''.join(cards)}
     </div>
-    <footer>Deployed via 5tratumOS store · Cortex Monitoring</footer>
+    <footer>Deployed via 5tratumOS store · Cortex Monitoring {CORTEX_VERSION}</footer>
   </main>
   <script>
     (function () {{
@@ -204,12 +278,30 @@ def render_page() -> bytes:
     return html.encode("utf-8")
 
 
+def _safe_static(path: str) -> Path | None:
+    if not path.startswith("/static/"):
+        return None
+    rel = path[len("/static/") :]
+    if not rel or ".." in rel.split("/"):
+        return None
+    candidate = (STATIC / rel).resolve()
+    try:
+        candidate.relative_to(STATIC.resolve())
+    except ValueError:
+        return None
+    if not candidate.is_file():
+        return None
+    return candidate
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, fmt: str, *args) -> None:
         return
 
     def do_GET(self) -> None:  # noqa: N802
-        if self.path in ("/", "/index.html"):
+        path = self.path.split("?", 1)[0]
+
+        if path in ("/", "/index.html"):
             body = render_page()
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -219,7 +311,7 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(body)
             return
 
-        if self.path == "/healthz":
+        if path == "/healthz":
             body = b"ok\n"
             self.send_response(200)
             self.send_header("Content-Type", "text/plain")
@@ -228,13 +320,28 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(body)
             return
 
-        if self.path == "/api/links":
-            body = json.dumps(LINKS).encode("utf-8")
+        if path == "/api/links":
+            payload = {"cortex_version": CORTEX_VERSION, "links": LINKS}
+            body = json.dumps(payload).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
             self.wfile.write(body)
+            return
+
+        static_file = _safe_static(path)
+        if static_file is not None:
+            data = static_file.read_bytes()
+            ctype, _ = mimetypes.guess_type(str(static_file))
+            if static_file.suffix == ".svg":
+                ctype = "image/svg+xml"
+            self.send_response(200)
+            self.send_header("Content-Type", ctype or "application/octet-stream")
+            self.send_header("Content-Length", str(len(data)))
+            self.send_header("Cache-Control", "public, max-age=86400")
+            self.end_headers()
+            self.wfile.write(data)
             return
 
         self.send_response(404)
@@ -243,7 +350,7 @@ class Handler(BaseHTTPRequestHandler):
 
 def main() -> None:
     server = ThreadingHTTPServer((HOST, PORT), Handler)
-    print(f"Cortex Monitoring portal on http://{HOST}:{PORT}", flush=True)
+    print(f"Cortex Monitoring portal {CORTEX_VERSION} on http://{HOST}:{PORT}", flush=True)
     server.serve_forever()
 
 
