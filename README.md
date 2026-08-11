@@ -2,72 +2,54 @@
 
 Custom [5tratStore](https://github.com/WillItMod/5tratStore-global)-format catalogue.
 
-## Cortex Monitoring (`dev-0.0.7`)
+## Cortex Monitoring (`dev-0.0.8`)
 
-Installed via the 5tratumOS Custom Store. Grafana is opened directly on the
-default port **3000** (portal embedding optional).
+Installed via the 5tratumOS Custom Store. The store app opens a **Python portal**
+(not Grafana). Each tool link opens in a **new browser tab**.
 
-Node Exporter collectors enabled for Node Exporter Full: `processes`, `systemd`
-(+ D-Bus), `tcpstat`, `interrupts`, `ethtool`, `hwmon`, `powersupplyclass`.
+### Ports
 
-**Note:** Fan Speed / Power Supply panels only show data if the host exposes
-them via `/sys` (hwmon / power_supply). Many chassis (including some mining
-boxes) do not; those need IPMI or vendor tools, which the stock node_exporter
-image does not include.
-
-### Direct ports (LAN checks)
-
-| Service | URL on the node |
-|---------|-----------------|
+| Service | URL |
+|---------|-----|
+| **Portal (5tratumOS app)** | `http://<node>:8080/` |
 | Grafana | `http://<node>:3000/` |
 | VictoriaMetrics (VMUI) | `http://<node>:8428/vmui/` |
 | VictoriaLogs (VMUI) | `http://<node>:9428/select/vmui/` |
 | Alertmanager | `http://<node>:9093/` |
 | Alloy | `http://<node>:12345/` |
-| Node Exporter metrics | `http://<node>:9100/metrics` |
+| Node Exporter | `http://<node>:9100/metrics` |
 
-Quick health checks:
+Node Exporter collectors enabled for Node Exporter Full: `processes`, `systemd`
+(+ D-Bus), `tcpstat`, `interrupts`, `ethtool`, `hwmon`, `powersupplyclass`.
 
-```bash
-curl -fsS http://127.0.0.1:8428/health
-curl -fsS http://127.0.0.1:9428/health
-curl -fsS http://127.0.0.1:9100/metrics | head
-curl -fsS http://127.0.0.1:12345/-/ready
-curl -fsS http://127.0.0.1:9093/-/healthy
-```
+**Note:** Fan Speed / Power Supply panels only show data if the host exposes
+them via `/sys` (hwmon / power_supply).
 
 ## Password
 
 - Username: `admin`
-- Password: OS `APP_PASSWORD`, or `cortex` if the OS did not inject one
-
-Find it on the node:
+- Password: OS `APP_PASSWORD`, or `cortex` if unset
 
 ```bash
 sudo cat /var/lib/5tratumos/apps/cortex-monitoring/admin-password.txt
-# also try:
-sudo grep -R APP_PASSWORD /var/lib/5tratumos/apps/cortex-monitoring -n 2>/dev/null
-docker exec "$(docker ps --format '{{.Names}}' | grep -E 'cortex-monitoring.*app' | head -1)" printenv GF_SECURITY_ADMIN_PASSWORD
 ```
 
-Reset if needed (does not require knowing the old password):
+Reset:
 
 ```bash
-docker exec -it "$(docker ps --format '{{.Names}}' | grep -E 'cortex-monitoring.*app' | head -1)" \
+docker exec -it "$(docker ps --format '{{.Names}}' | grep -E 'cortex-monitoring.*grafana' | head -1)" \
   grafana cli admin reset-admin-password cortex
 ```
 
 ## Install
 
 1. Add Custom Store: `https://github.com/cortex-repo/cortex-5tratum-store`
-2. Install **Cortex Monitoring** `dev-0.0.7`
-3. Login with the password methods above
+2. Install **Cortex Monitoring** `dev-0.0.8`
+3. Open the app in 5tratumOS → portal → click through to tools
 
-If upgrading from a broken earlier build:
+If upgrading from an older build and the portal files are missing:
 
 ```bash
-# uninstall in UI first
+# uninstall in UI first for a clean copy of data/portal
 sudo rm -rf /var/lib/5tratumos/apps/cortex-monitoring
 ```
-
-Then reinstall so provisioning files are copied fresh.

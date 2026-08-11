@@ -1,27 +1,25 @@
 id: cortex-monitoring
 name: Cortex Monitoring
-tagline: Grafana with VictoriaMetrics, logs, Alloy, and Node Exporter
+tagline: Observability portal for Grafana, VictoriaMetrics, and logs
 description: >-
-  Cortex Monitoring extends the official 5tratStore GLOBAL Grafana recipe with
-  VictoriaMetrics, VictoriaLogs, Grafana Alloy, Node Exporter, and Alertmanager.
-  Grafana uses APP_HOST: app on the default Grafana port 3000 (direct access;
-  5tratumOS store install unchanged). Companion UIs/APIs are published on
-  upstream ports: VictoriaMetrics 8428, VictoriaLogs 9428, Alertmanager 9093,
-  Alloy 12345, Node Exporter 9100. Plugins, datasources, Node Exporter Full
-  dashboard (1860), and Docker log shipping to VictoriaLogs are included. Login
-  is admin with APP_PASSWORD (fallback cortex); also written to
-  admin-password.txt under the app data root.
-version: dev-0.0.7
+  Cortex Monitoring installs a small Python portal as the 5tratumOS app front
+  (port 8080). The portal lists Grafana, VictoriaMetrics, VictoriaLogs,
+  Alertmanager, Alloy, and Node Exporter with links that open in a new browser
+  tab. Grafana remains on port 3000 for direct access. Stack includes
+  VictoriaMetrics plugins, Node Exporter Full dashboard (1860), and Docker log
+  shipping to VictoriaLogs. Login for Grafana is admin with APP_PASSWORD
+  (fallback cortex); also written to admin-password.txt.
+version: dev-0.0.8
 category: Monitoring
-developer: Grafana Labs and contributors
-website: https://grafana.com/oss/grafana/
-repo: https://github.com/grafana/grafana
+developer: Cortex Monitoring
+website: https://github.com/cortex-repo/cortex-5tratum-store
+repo: https://github.com/cortex-repo/cortex-5tratum-store
 support: https://github.com/cortex-repo/cortex-5tratum-store/issues
-icon: https://raw.githubusercontent.com/grafana/grafana/v13.1.0/public/img/grafana_icon.svg
-port: 3000
+icon: icon.png
+port: 8080
 path: /
 services:
   app_proxy:
     environment:
       APP_HOST: app
-      APP_PORT: 3000
+      APP_PORT: 8080

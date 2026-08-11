@@ -21,8 +21,9 @@ adds VictoriaMetrics stack components. Images are pulled directly from upstream.
 - **Alpine 3.22.1** (init) — `alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1`
 - **Dashboard:** Node Exporter Full (Grafana.com id 1860), provisioned from upstream export
   - https://grafana.com/grafana/dashboards/1860-node-exporter-full/
-- Icon: official Grafana asset
-  https://raw.githubusercontent.com/grafana/grafana/v13.1.0/public/img/grafana_icon.svg
+- **Python 3.12.11 Alpine** (portal) — PSF
+  - Image: `python:3.12.11-alpine@sha256:efcdfa6a6b2fd2afb9c7dfa9a5b288a6f68338b5cfdebe6b637d986067d85757`
+- Icon: original Cortex Monitoring artwork generated for this recipe (`icon.png`)
 
 Node Exporter mounts host `/proc`, `/sys`, and `/` read-only and uses `pid: host`.
 Alloy mounts `/var/run/docker.sock` and runs as root to collect logs from all
