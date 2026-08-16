@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parent
 STATIC = ROOT / "static"
 
 # Keep in sync with 5tratstore-app.yml and docker-compose image tags.
-CORTEX_VERSION = "dev-0.0.11"
+CORTEX_VERSION = "dev-0.0.12"
 
 LINKS = [
     {

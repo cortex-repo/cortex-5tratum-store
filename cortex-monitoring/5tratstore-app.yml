@@ -9,9 +9,8 @@ description: >-
   Grafana remains on port 3000 for direct access. Stack includes VictoriaMetrics
   plugins, Node Exporter Full dashboard (1860), APU Power dashboard (RAPL +
   GPU hwmon), and Docker log shipping to VictoriaLogs. Login for Grafana is
-  admin with APP_PASSWORD (fallback cortex); also written to
-  admin-password.txt.
-version: dev-0.0.11
+  admin with password cortex; also written to admin-password.txt.
+version: dev-0.0.12
 category: Monitoring
 developer: Cortex Monitoring
 website: https://github.com/cortex-repo/cortex-5tratum-store

@@ -1,0 +1,44 @@
+schemaVersion: 1
+status: proposed
+appId: cortex-mining-hub
+appVersion: dev-0.1.0
+reviewedAt: ""
+reviewedBy: ""
+upstream:
+  sourceUrl: https://github.com/cortex-repo/cortex-mining
+  license: Source-available (Cortex Mining Hub)
+  licenseEvidence: https://github.com/cortex-repo/cortex-mining
+delivery:
+  mode: first-party-artifact
+  storePayload: recipe-only
+  mirrorsThirdPartyPayload: false
+rights:
+  packageOriginal: true
+  softwareDistributionCleared: true
+  containerUseCleared: true
+  listingTextCleared: true
+  artworkCleared: true
+  noticesIncluded: true
+compatibility:
+  osVersions:
+    - pending-maintainer-test
+  architectures:
+    - amd64
+  installTested: false
+  startTested: false
+  updateTested: false
+  uninstallTested: false
+security:
+  privileged: false
+  hostNetwork: false
+  dockerSocket: false
+  hostMountsReviewed: true
+  devicesReviewed: true
+  networkEndpointsReviewed: true
+notes: >-
+  First-party Cortex image from ghcr.io/cortex-repo/cortex-mining-hub.
+  Joins external 5tratumOS Axe node networks for RPC. Seeds config JSON
+  into APP_DATA_DIR on first start (credentials are not in the image).
+  extra_hosts host.docker.internal is used so the portal can reach the
+  5tratumOS WebUI on the host. Publish 8790 for direct access alongside
+  app_proxy.

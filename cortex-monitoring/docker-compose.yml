@@ -8,8 +8,6 @@ services:
     image: alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
     restart: "no"
     user: "0:0"
-    environment:
-      APP_PASSWORD: ${APP_PASSWORD:-cortex}
     command:
       - sh
       - -c
@@ -20,10 +18,10 @@ services:
         chown -R 1000:1000 /appdata/victoriametrics /appdata/victorialogs /appdata/alloy
         install -d -o 65534 -g 65534 /appdata/alertmanager
         chown -R 65534:65534 /appdata/alertmanager
-        # Always write a recoverable copy of the Grafana admin password
+        # Fixed Grafana admin password (ignore OS-injected APP_PASSWORD)
         umask 077
-        printf '%s\n' "$${APP_PASSWORD}" > /appdata/admin-password.txt
-        printf '%s\n' "$${APP_PASSWORD}" > /grafana/admin-password.txt
+        printf '%s\n' "cortex" > /appdata/admin-password.txt
+        printf '%s\n' "cortex" > /grafana/admin-password.txt
         chown 1000:1000 /appdata/admin-password.txt
         chown 472:0 /grafana/admin-password.txt
     volumes:
@@ -59,7 +57,7 @@ services:
     user: "472:0"
     environment:
       GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: ${APP_PASSWORD:-cortex}
+      GF_SECURITY_ADMIN_PASSWORD: cortex
       GF_USERS_ALLOW_SIGN_UP: "false"
       GF_ANALYTICS_REPORTING_ENABLED: "false"
       GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
