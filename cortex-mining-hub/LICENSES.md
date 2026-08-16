@@ -13,4 +13,6 @@ from GitHub Container Registry.
 
 Config JSON (`nodes.json`, `mining.json`, `portal.json`) is seeded on first
 start from defaults baked in the image. Those defaults use `CHANGE_ME`
-placeholders and are not credentials.
+placeholders and are not credentials. Node RPC secrets are copied at
+runtime from the sibling 5tratumOS app confs and are not stored in the
+image.

@@ -19,11 +19,14 @@ from [cortex-mining](https://github.com/cortex-repo/cortex-mining)).
 ### First-run config
 
 On install, the init container seeds `nodes.json`, `mining.json`, and
-`portal.json` under the app data directory. Edit those files with RPC
-passwords and miner credentials, then restart the app:
+`portal.json`, then copies each Axe node's `rpcuser` / `rpcpassword` /
+`rpcport` from `/var/lib/5tratumos/apps/<app>/data/node/`. Use Settings →
+**Scrape RPC from 5tratumOS** if a node password or RPC port changes.
+
+Still fill 5tratumOS WebUI and miner credentials in Settings (or edit
+`mining.json`):
 
 ```bash
-sudo nano /var/lib/5tratumos/apps/cortex-mining-hub/data/nodes.json
 sudo nano /var/lib/5tratumos/apps/cortex-mining-hub/data/mining.json
 ```
 

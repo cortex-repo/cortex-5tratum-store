@@ -11,8 +11,11 @@ services:
     command: ["/usr/local/bin/cortex-mining-init"]
     environment:
       DATA_DIR: /data
+      NODES_FILE: /data/nodes.json
+      STRATUMOS_APPS_DIR: /5tratumos-apps
     volumes:
       - ${APP_DATA_DIR}/data:/data
+      - ${APP_DATA_DIR}/..:/5tratumos-apps:ro
     security_opt:
       - no-new-privileges:true
 
@@ -25,11 +28,13 @@ services:
       NODES_FILE: /data/nodes.json
       PORTAL_FILE: /data/portal.json
       MINING_FILE: /data/mining.json
+      STRATUMOS_APPS_DIR: /5tratumos-apps
       HOST_IP: ${HOST_IP:-${DEVICE_HOST_IP:-}}
     ports:
       - "8790:8790"
     volumes:
       - ${APP_DATA_DIR}/data:/data
+      - ${APP_DATA_DIR}/..:/5tratumos-apps:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:

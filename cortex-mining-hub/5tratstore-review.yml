@@ -39,6 +39,8 @@ notes: >-
   First-party Cortex image from ghcr.io/cortex-repo/cortex-mining-hub.
   Joins external 5tratumOS Axe node networks for RPC. Seeds config JSON
   into APP_DATA_DIR on first start (credentials are not in the image).
-  extra_hosts host.docker.internal is used so the portal can reach the
-  5tratumOS WebUI on the host. Publish 8790 for direct access alongside
-  app_proxy.
+  Read-only bind of the sibling apps directory so init/Settings can copy
+  rpcuser/rpcpassword/rpcport from each Axe node's conf; secrets are not
+  returned by the API. extra_hosts host.docker.internal is used so the
+  portal can reach the 5tratumOS WebUI on the host. Publish 8790 for
+  direct access alongside app_proxy.

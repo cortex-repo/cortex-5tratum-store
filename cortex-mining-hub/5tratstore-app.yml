@@ -7,9 +7,11 @@ description: >-
   and 5tratumOS fleet KPIs. The store proxy opens the portal on port 8790.
   The container joins installed Axe node Docker networks so RPC stays
   internal. On first start it seeds nodes.json, mining.json, and portal.json
-  under APP_DATA_DIR; fill RPC and miner credentials there. This hub is a
-  companion to 5tratumOS and Axe node apps, not a replacement. Install the
-  Axe node apps you want to monitor first so their Docker networks exist.
+  under APP_DATA_DIR, then copies rpcuser, rpcpassword, and rpcport from each
+  installed Axe node's conf. Re-scrape anytime from Settings. Fill 5tratumOS
+  WebUI and miner credentials in Settings. This hub is a companion to
+  5tratumOS and Axe node apps, not a replacement. Install the Axe node apps
+  you want to monitor first so their Docker networks exist.
 version: dev-0.1.0
 category: Mining infrastructure
 developer: Cortex Mining
