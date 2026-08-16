@@ -10,6 +10,8 @@ from GitHub Container Registry.
   - Base: `python:3.12.11-slim-bookworm@sha256:519591d6871b7bc437060736b9f7456b8731f1499a57e22e6c285135ae657bf7` (PSF)
 - **Icon:** original Cortex Mining artwork (`icon.png`), the same mark used
   in the hub portal.
+- **Gallery:** original Cortex Mining Hub screenshots (`1.png`–`6.png`)
+  captured from the live portal (fleet overview, node pages, crawler).
 
 Config JSON (`nodes.json`, `mining.json`, `portal.json`) is seeded on first
 start from defaults baked in the image. Those defaults use `CHANGE_ME`

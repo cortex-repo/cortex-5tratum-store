@@ -19,6 +19,13 @@ website: https://cortexmining.com
 repo: https://github.com/cortex-repo/cortex-mining
 support: https://github.com/cortex-repo/cortex-mining/issues
 icon: icon.png
+gallery:
+  - https://raw.githubusercontent.com/cortex-repo/cortex-5tratum-store/main/cortex-mining-hub/1.png
+  - https://raw.githubusercontent.com/cortex-repo/cortex-5tratum-store/main/cortex-mining-hub/2.png
+  - https://raw.githubusercontent.com/cortex-repo/cortex-5tratum-store/main/cortex-mining-hub/3.png
+  - https://raw.githubusercontent.com/cortex-repo/cortex-5tratum-store/main/cortex-mining-hub/4.png
+  - https://raw.githubusercontent.com/cortex-repo/cortex-5tratum-store/main/cortex-mining-hub/5.png
+  - https://raw.githubusercontent.com/cortex-repo/cortex-5tratum-store/main/cortex-mining-hub/6.png
 port: 8790
 path: /
 services:
