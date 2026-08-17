@@ -2,20 +2,21 @@ id: cortex-monitoring
 name: Cortex Monitoring
 tagline: Observability portal for Grafana, VictoriaMetrics, and logs
 description: >-
-  Cortex Monitoring installs a dark Python portal as the 5tratumOS app front
-  (port 8080). The portal shows the stack version plus Grafana, VictoriaMetrics,
-  VictoriaLogs, Alertmanager, Alloy, and Node Exporter cards with icons, tool
-  versions, and http://host-ip:port links that open in a new browser tab.
-  Grafana remains on port 3000 for direct access. Stack includes VictoriaMetrics
-  plugins, Node Exporter Full dashboard (1860), APU Power dashboard (RAPL +
-  GPU hwmon), and Docker log shipping to VictoriaLogs. Login for Grafana is
-  admin with password cortex; also written to admin-password.txt.
-version: dev-0.0.12
+  Cortex Monitoring installs a Cortex-branded portal image as the 5tratumOS app
+  front (port 8080). The portal shows the stack version plus Grafana,
+  VictoriaMetrics, VictoriaLogs, Alertmanager, Alloy, and Node Exporter cards
+  with icons, tool versions, and http://host-ip:port links that open in a new
+  browser tab. Grafana remains on port 3000 for direct access. Stack includes
+  VictoriaMetrics plugins, Node Exporter Full dashboard (1860), APU Power
+  dashboard (RAPL + GPU hwmon), and Docker log shipping to VictoriaLogs. Login
+  for Grafana is admin with password cortex; also written to admin-password.txt.
+  Portal image: ghcr.io/cortex-repo/cortex-monitoring.
+version: dev-0.0.13
 category: Monitoring
 developer: Cortex Monitoring
 website: https://github.com/cortex-repo/cortex-5tratum-store
-repo: https://github.com/cortex-repo/cortex-5tratum-store
-support: https://github.com/cortex-repo/cortex-5tratum-store/issues
+repo: https://github.com/cortex-repo/cortex-monitoring
+support: https://github.com/cortex-repo/cortex-monitoring/issues
 icon: icon.png
 port: 8080
 path: /

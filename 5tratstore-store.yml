@@ -1,3 +1,6 @@
 id: cortex
 name: Cortex
-description: Custom 5tratStore for Cortex Mining Hub, Cortex Monitoring, and related apps.
+description: >-
+  Custom 5tratStore catalogue. Recipes only — app images are published from
+  first-party repos (Cortex Mining Hub, Cortex Monitoring, and related apps).
+

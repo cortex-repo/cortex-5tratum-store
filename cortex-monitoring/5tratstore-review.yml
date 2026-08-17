@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: cortex-monitoring
-appVersion: dev-0.0.12
+appVersion: dev-0.0.13
 reviewedAt: ""
 reviewedBy: ""
 upstream:
@@ -36,9 +36,10 @@ security:
   devicesReviewed: true
   networkEndpointsReviewed: true
 notes: >-
-  5tratumOS opens a Python portal (APP_HOST: app, port 8080) because Grafana
-  does not embed cleanly. Grafana is published on 3000. Stack adds
-  VictoriaMetrics/Logs, Alloy, Node Exporter, Alertmanager. Node Exporter uses
-  read-only host mounts, pid: host, root user, and D-Bus for systemd. Alloy
-  mounts /var/run/docker.sock for container logs. Fan/PSU panels need host
-  hwmon or power_supply sysfs.
+  5tratumOS opens a Cortex-branded portal image (APP_HOST: app, port 8080)
+  from ghcr.io/cortex-repo/cortex-monitoring because Grafana does not embed
+  cleanly. Grafana is published on 3000. Stack adds VictoriaMetrics/Logs,
+  Alloy, Node Exporter, Alertmanager. Node Exporter uses read-only host mounts,
+  pid: host, root user, and D-Bus for systemd. Alloy mounts /var/run/docker.sock
+  for container logs. Fan/PSU panels need host hwmon or power_supply sysfs.
+  Grafana admin password is fixed to cortex.
