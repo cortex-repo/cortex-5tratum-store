@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: cortex-mining-hub
-appVersion: dev-0.1.4
+appVersion: dev-0.1.5
 reviewedAt: ""
 reviewedBy: ""
 upstream:
