@@ -13,7 +13,7 @@ source and container images live in their own repos and are pulled from GHCR.
 
 | App | Version | Summary | Image / source |
 |-----|---------|---------|----------------|
-| [Cortex Mining Hub](./cortex-mining-hub/) | `dev-0.1.5` | Fleet portal for Axe nodes, LAN miners, and 5tratumOS KPIs | `ghcr.io/cortex-repo/cortex-mining-hub` · [cortex-mining](https://github.com/cortex-repo/cortex-mining) |
+| [Cortex Mining Hub](./cortex-mining-hub/) | `dev-0.1.6` | Fleet portal for Axe nodes, LAN miners, and 5tratumOS KPIs | `ghcr.io/cortex-repo/cortex-mining-hub` · [cortex-mining](https://github.com/cortex-repo/cortex-mining) |
 | [Cortex Monitoring](./cortex-monitoring/) | `dev-0.0.13` | Observability stack portal (Grafana, VictoriaMetrics/Logs, Alloy, …) | `ghcr.io/cortex-repo/cortex-monitoring` · [cortex-monitoring](https://github.com/cortex-repo/cortex-monitoring) |
 
 ## Install

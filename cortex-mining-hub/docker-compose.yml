@@ -5,7 +5,7 @@ services:
       APP_PORT: 8790
 
   init:
-    image: ghcr.io/cortex-repo/cortex-mining-hub:dev-0.1.5
+    image: ghcr.io/cortex-repo/cortex-mining-hub:dev-0.1.6
     restart: "no"
     user: "0:0"
     command: ["/usr/local/bin/cortex-mining-init"]
@@ -20,7 +20,7 @@ services:
       - no-new-privileges:true
 
   app:
-    image: ghcr.io/cortex-repo/cortex-mining-hub:dev-0.1.5
+    image: ghcr.io/cortex-repo/cortex-mining-hub:dev-0.1.6
     restart: unless-stopped
     user: "1000:1000"
     environment:
