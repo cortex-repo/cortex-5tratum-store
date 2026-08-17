@@ -4,10 +4,10 @@ Custom [5tratStore](https://github.com/WillItMod/5tratStore-global)-format catal
 
 Add this store in 5tratumOS: `https://github.com/cortex-repo/cortex-5tratum-store`
 
-## Cortex Mining Hub (`dev-0.1.3`)
+## Cortex Mining Hub (`dev-0.1.4`)
 
 First-party portal for Axe nodes, LAN miners, and 5tratumOS fleet KPIs.
-The recipe pulls `ghcr.io/cortex-repo/cortex-mining-hub:dev-0.1.3` (built
+The recipe pulls `ghcr.io/cortex-repo/cortex-mining-hub:dev-0.1.4` (built
 from [cortex-mining](https://github.com/cortex-repo/cortex-mining)).
 The store listing gallery is `cortex-mining-hub/1.png`–`6.png`.
 
@@ -87,7 +87,7 @@ docker exec -it "$(docker ps --format '{{.Names}}' | grep -E 'cortex-monitoring.
 ## Install
 
 1. Add Custom Store: `https://github.com/cortex-repo/cortex-5tratum-store`
-2. Install **Cortex Mining Hub** `dev-0.1.3` and/or **Cortex Monitoring** `dev-0.0.12`
+2. Install **Cortex Mining Hub** `dev-0.1.4` and/or **Cortex Monitoring** `dev-0.0.12`
 3. Open the app in 5tratumOS
 
 If upgrading Cortex Monitoring from an older build and the portal files are missing:
