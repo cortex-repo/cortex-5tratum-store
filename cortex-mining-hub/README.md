@@ -33,3 +33,10 @@ standalone `cortex-mining-nodes` container is already bound to 8790, stop
 it first.
 
 Image source and publish workflow: [cortex-mining](https://github.com/cortex-repo/cortex-mining).
+
+## Known issues
+
+**Reinstall does not work.** To pick up a new version, uninstall the app and
+choose **Retain Data**, then install the latest version from the store. If that
+install fails, uninstall again and **purge data**, then install the latest
+version (you will need to re-enter Settings credentials).

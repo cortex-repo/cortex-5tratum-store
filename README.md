@@ -21,3 +21,9 @@ source and container images live in their own repos and are pulled from GHCR.
 1. Add Custom Store: `https://github.com/cortex-repo/cortex-5tratum-store`
 2. Install the app(s) you need from the store catalogue
 3. Open each app’s README in this repo for ports, passwords, and upgrade notes
+
+## Known issues
+
+**Reinstall does not work.** Uninstall the app first and choose **Retain Data**,
+then install the latest version. If that install fails, uninstall again and
+**purge data**, then install the latest version.
