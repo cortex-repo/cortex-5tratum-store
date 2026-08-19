@@ -1,0 +1,45 @@
+schemaVersion: 1
+status: proposed
+appId: cortex-trading
+appVersion: dev-0.1.0
+reviewedAt: ""
+reviewedBy: ""
+upstream:
+  sourceUrl: https://github.com/cortex-repo/cortex-trading
+  license: Source-available (Cortex Trading)
+  licenseEvidence: https://github.com/cortex-repo/cortex-trading
+delivery:
+  mode: first-party-artifact
+  storePayload: recipe-only
+  mirrorsThirdPartyPayload: false
+rights:
+  packageOriginal: true
+  softwareDistributionCleared: true
+  containerUseCleared: true
+  listingTextCleared: true
+  artworkCleared: true
+  noticesIncluded: true
+compatibility:
+  osVersions:
+    - pending-maintainer-test
+  architectures:
+    - amd64
+  installTested: false
+  startTested: false
+  updateTested: false
+  uninstallTested: false
+security:
+  privileged: false
+  hostNetwork: false
+  dockerSocket: false
+  hostMountsReviewed: true
+  devicesReviewed: true
+  networkEndpointsReviewed: true
+notes: >-
+  First-party Cortex image from ghcr.io/cortex-repo/cortex-trading.
+  No eToro keys, APP_SECRET, or .env are baked into the image. Init seeds
+  APP_DATA_DIR (ledger, backtests) as uid 1000. Dashboard serves HTTP on
+  8787 for the store proxy; worker runs `cortex run` against the same
+  volume. LIVE stays disarmed until the operator sets keys and LIVE_ARMED
+  in Profile. Publish 8787 for direct access alongside app_proxy. Stop any
+  standalone cortex-trading compose on 8787 before install.

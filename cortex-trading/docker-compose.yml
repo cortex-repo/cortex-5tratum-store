@@ -1,0 +1,78 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: app
+      APP_PORT: 8787
+
+  init:
+    image: ghcr.io/cortex-repo/cortex-trading:dev-0.1.0
+    restart: "no"
+    user: "0:0"
+    command: ["/usr/local/bin/cortex-trading-init"]
+    environment:
+      DATA_DIR: /data
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    security_opt:
+      - no-new-privileges:true
+
+  app:
+    image: ghcr.io/cortex-repo/cortex-trading:dev-0.1.0
+    restart: unless-stopped
+    user: "1000:1000"
+    command:
+      - cortex
+      - dashboard
+      - --host
+      - "0.0.0.0"
+      - --port
+      - "8787"
+      - --no-https
+    environment:
+      DATA_DIR: /data
+      LEDGER_DB: /data/cortex.db
+      LEDGER_DIR: /data/ledger
+      BACKTEST_DIR: /data/backtests
+      ETORO_ENV: demo
+      LIVE_ARMED: "false"
+      LEVERAGE: "1"
+      CORTEX_BOOTSTRAP_USER: admin
+      CORTEX_BOOTSTRAP_PASSWORD: cortex
+    ports:
+      - "8787:8787"
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+  worker:
+    image: ghcr.io/cortex-repo/cortex-trading:dev-0.1.0
+    restart: unless-stopped
+    user: "1000:1000"
+    command:
+      - cortex
+      - run
+    environment:
+      DATA_DIR: /data
+      LEDGER_DB: /data/cortex.db
+      LEDGER_DIR: /data/ledger
+      BACKTEST_DIR: /data/backtests
+      ETORO_ENV: demo
+      LIVE_ARMED: "false"
+      LEVERAGE: "1"
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      app:
+        condition: service_started
