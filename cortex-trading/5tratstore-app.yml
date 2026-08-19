@@ -5,12 +5,13 @@ description: >-
   Cortex Trading is a dark ops dashboard plus strategy worker for eToro.
   Deterministic strategies (SMA cross, mean reversion, Donchian, RSI) auto-trade
   on Demo or LIVE behind a hard RiskGate. The store proxy opens the portal on
-  port 8787 (HTTP). No API keys are in the image — after install, sign in
-  (admin / cortex) and enter eToro keys in Profile. Create a new eToro Agent
+  port 8787 (HTTP). No API keys are in the image — after install, open the
+  portal (5tratumOS already signed you in) and enter eToro keys in Profile.
+  Direct :8787 still uses admin / cortex. Create a new eToro Agent
   and point Config → Agent URL at it. LIVE orders stay blocked until you arm
   LIVE_ARMED in Profile. Dashboard and worker share APP_DATA_DIR (ledger,
   runtime_config, ops). Default is Demo. This app is not a broker.
-version: dev-0.1.4
+version: dev-0.1.5
 category: Finance
 developer: Cortex
 website: https://github.com/cortex-repo/cortex-trading
