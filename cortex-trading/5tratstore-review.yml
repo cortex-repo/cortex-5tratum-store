@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: cortex-trading
-appVersion: dev-0.1.6
+appVersion: dev-0.1.7
 reviewedAt: ""
 reviewedBy: ""
 upstream:
