@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: cortex-trading
-appVersion: dev-0.1.5
+appVersion: dev-0.1.6
 reviewedAt: ""
 reviewedBy: ""
 upstream:
@@ -40,6 +40,6 @@ notes: >-
   No eToro keys, APP_SECRET, or .env are baked into the image. Init seeds
   APP_DATA_DIR (ledger, backtests) as uid 1000. Dashboard serves HTTP on
   8787 for the store proxy; worker runs `cortex run` against the same
-  volume. LIVE stays disarmed until the operator sets keys and LIVE_ARMED
-  in Profile. Publish 8787 for direct access alongside app_proxy. Stop any
+  volume. LIVE stays disarmed until the operator sets keys and saves
+  Target account LIVE in Config. Publish 8787 for direct access alongside app_proxy. Stop any
   standalone cortex-trading compose on 8787 before install.

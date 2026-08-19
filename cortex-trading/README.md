@@ -1,7 +1,7 @@
-# Cortex Trading (`dev-0.1.5`)
+# Cortex Trading (`dev-0.1.6`)
 
 First-party eToro agent portal + strategy worker. The recipe pulls
-`ghcr.io/cortex-repo/cortex-trading:dev-0.1.5` (built from
+`ghcr.io/cortex-repo/cortex-trading:dev-0.1.6` (built from
 [cortex-trading](https://github.com/cortex-repo/cortex-trading)).
 
 **No eToro keys are in the image.** After install, open the portal (5tratumOS
@@ -21,7 +21,8 @@ Agent and set Config → Agent URL.
    Direct `:8787` still uses `admin` / `cortex` (change this in Profile).
 2. Profile: eToro public key + Demo/LIVE read and Agent trade private keys.
 3. Config: Agent URL of the **new** copy (not an existing live book unless you intend to reuse it).
-4. Default is Demo. LIVE stays blocked until you arm `LIVE_ARMED` in Profile.
+4. Default is Demo. Save Config → Target account LIVE to use the real-money
+   book and arm orders (RiskGate still applies).
 5. Start the loop from the dashboard. The worker ticks on the shared data volume.
 
 Data lives under `/var/lib/5tratumos/apps/cortex-trading/data/` (ledger, ops,

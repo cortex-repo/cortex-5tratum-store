@@ -8,10 +8,10 @@ description: >-
   port 8787 (HTTP). No API keys are in the image — after install, open the
   portal (5tratumOS already signed you in) and enter eToro keys in Profile.
   Direct :8787 still uses admin / cortex. Create a new eToro Agent
-  and point Config → Agent URL at it. LIVE orders stay blocked until you arm
-  LIVE_ARMED in Profile. Dashboard and worker share APP_DATA_DIR (ledger,
+  and point Config → Agent URL at it. LIVE orders stay blocked until you
+  save Target account LIVE in Config. Dashboard and worker share APP_DATA_DIR (ledger,
   runtime_config, ops). Default is Demo. This app is not a broker.
-version: dev-0.1.5
+version: dev-0.1.6
 category: Finance
 developer: Cortex
 website: https://github.com/cortex-repo/cortex-trading
