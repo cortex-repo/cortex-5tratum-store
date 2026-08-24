@@ -1,7 +1,7 @@
-# Cortex Trading (`dev-0.1.17`)
+# Cortex Trading (`dev-0.1.18`)
 
 First-party eToro agent portal + strategy worker. The recipe pulls
-`ghcr.io/cortex-repo/cortex-trading:dev-0.1.17` (built from
+`ghcr.io/cortex-repo/cortex-trading:dev-0.1.18` (built from
 [cortex-trading](https://github.com/cortex-repo/cortex-trading)).
 
 **No eToro keys are in the image.** After install, open the portal (5tratumOS
