@@ -141,6 +141,12 @@ services:
     restart: unless-stopped
     # Root is required to read /var/run/docker.sock for container log collection
     user: "0:0"
+    # Cap Alloy so sharelog fan-out cannot starve the host
+    cpus: 1.0
+    mem_limit: 768m
+    environment:
+      GOMEMLIMIT: 700MiB
+      GOMAXPROCS: "2"
     command:
       - run
       - /etc/alloy/config.alloy

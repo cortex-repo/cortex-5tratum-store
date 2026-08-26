@@ -1,4 +1,4 @@
-# Cortex Monitoring (`dev-0.0.18`)
+# Cortex Monitoring (`dev-0.0.19`)
 
 5tratumOS store recipe for the Cortex Monitoring stack. The store app opens a
 **Cortex-branded portal image** (not Grafana). Each tool link opens in a new
@@ -44,11 +44,13 @@ Alloy mounts `/var/lib/5tratumos/apps/axebch/data/pool/www` and tails:
 | `ckpool.log*` | `job=ckpool`, `log_type=ckpool`, `coin=bch` |
 | `**/*.sharelog` | `job=ckpool`, `log_type=sharelog`, `coin=bch` (+ `result`, `agent` from JSON) |
 
-New hex subfolders / `.sharelog` files are discovered every 10s. On first
-discover Alloy starts at **EOF** (`tail_from_end`) so historical heavy sharelogs
-are not backfilled. To re-ingest from scratch, stop the stack, clear Alloy
-positions under `APP_DATA_DIR/alloy`, set `tail_from_end = false` temporarily,
-and restart.
+New hex subfolders / `.sharelog` files are discovered every **2 minutes**.
+Only files touched in the last **2 hours** are tailed (`ignore_older_than`).
+File poll interval is **5–30s** (not 250ms). Alloy is also capped at **1 CPU /
+768 MiB**. On first discover Alloy starts at **EOF** (`tail_from_end`) so
+historical heavy sharelogs are not backfilled. To re-ingest from scratch, stop
+the stack, clear Alloy positions under `APP_DATA_DIR/alloy`, set
+`tail_from_end = false` / widen `ignore_older_than` temporarily, and restart.
 
 Sharelog lines are pure JSON without a `msg` field. Alloy pushes them with
 `_msg_field=workername` so VictoriaLogs uses `workername` as `_msg` after JSON
