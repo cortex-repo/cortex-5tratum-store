@@ -11,7 +11,7 @@ description: >-
   and point Config → Agent URL at it. LIVE orders stay blocked until you
   save Target account LIVE in Config. Dashboard and worker share APP_DATA_DIR (ledger,
   runtime_config, ops). Default is Demo. This app is not a broker.
-version: dev-0.1.18
+version: dev-0.1.19
 category: Finance
 developer: Cortex
 website: https://github.com/cortex-repo/cortex-trading
