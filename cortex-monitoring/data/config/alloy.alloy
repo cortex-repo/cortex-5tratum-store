@@ -7,7 +7,7 @@ prometheus.exporter.self "alloy" {}
 
 prometheus.scrape "alloy" {
   targets         = prometheus.exporter.self.alloy.targets
-  scrape_interval = "60s"
+  scrape_interval = "30s"
   forward_to      = [prometheus.remote_write.victoria.receiver]
 }
 
@@ -19,7 +19,7 @@ prometheus.scrape "node_exporter" {
       "instance"    = "cortex-host",
     },
   ]
-  scrape_interval = "60s"
+  scrape_interval = "30s"
   forward_to      = [prometheus.remote_write.victoria.receiver]
 }
 
@@ -31,7 +31,7 @@ prometheus.scrape "victoriametrics" {
     },
   ]
   metrics_path    = "/metrics"
-  scrape_interval = "60s"
+  scrape_interval = "30s"
   forward_to      = [prometheus.remote_write.victoria.receiver]
 }
 
@@ -45,7 +45,7 @@ prometheus.remote_write "victoria" {
 // then ship to VictoriaLogs (Loki-compatible push API).
 discovery.docker "containers" {
   host             = "unix:///var/run/docker.sock"
-  refresh_interval = "60s"
+  refresh_interval = "30s"
 }
 
 discovery.relabel "containers" {
@@ -90,8 +90,8 @@ loki.write "victoria_logs_ckpool" {
 }
 
 // Axe BCH pool logs (ckpool + sharelogs under pool/www).
-// Sharelogs create many nested files — only watch recently written ones and
-// poll slowly to keep Alloy CPU/RAM down.
+// After log cleanup the tree is smaller — poll more often so dashboards
+// don't show multi-minute gaps, while still ignoring stale files.
 local.file_match "axebch_pool" {
   path_targets = [
     {
@@ -109,10 +109,8 @@ local.file_match "axebch_pool" {
       "pool_app"  = "axebch",
     },
   ]
-  // Discover new folders/files less often (was 10s).
-  sync_period = "2m"
-  // Drop stale sharelog files from the watch set (main CPU/RAM saver).
-  ignore_older_than = "2h"
+  sync_period       = "20s"
+  ignore_older_than = "6h"
 }
 
 loki.source.file "axebch_pool" {
@@ -122,10 +120,9 @@ loki.source.file "axebch_pool" {
   // Delete Alloy positions under APP_DATA_DIR/alloy to re-ingest if needed.
   tail_from_end = true
 
-  // Default poll is 250ms; with many sharelog files that burns CPU.
   file_watch {
-    min_poll_frequency = "5s"
-    max_poll_frequency = "30s"
+    min_poll_frequency = "1s"
+    max_poll_frequency = "5s"
   }
 }
 
