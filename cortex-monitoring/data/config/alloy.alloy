@@ -81,6 +81,14 @@ loki.write "victoria_logs" {
   }
 }
 
+// Sharelogs are JSON without msg/_msg. Tell VictoriaLogs to use workername
+// as the message after it unpacks the Loki line JSON.
+loki.write "victoria_logs_ckpool" {
+  endpoint {
+    url = "http://victorialogs:9428/insert/loki/api/v1/push?_msg_field=workername,_msg"
+  }
+}
+
 // Axe BCH pool logs (ckpool + sharelogs under pool/www).
 // Sharelogs are NDJSON in nested hex folders that appear continuously.
 local.file_match "axebch_pool" {
@@ -112,22 +120,16 @@ loki.source.file "axebch_pool" {
 }
 
 loki.process "axebch_pool" {
-  forward_to = [loki.write.victoria_logs.receiver]
+  forward_to = [loki.write.victoria_logs_ckpool.receiver]
 
-  // Sharelogs are one JSON object per line. VictoriaLogs auto-unpacks JSON
-  // and requires a _msg field — inject one while keeping all original keys.
+  // Promote low-cardinality fields to stream labels for filtering.
   stage.match {
     selector = "{log_type=\"sharelog\"}"
 
     stage.json {
       expressions = {
         result     = "result",
-        errn       = "errn",
         agent      = "agent",
-        workername = "workername",
-        username   = "username",
-        diff       = "diff",
-        sdiff      = "sdiff",
       }
     }
 
@@ -136,19 +138,6 @@ loki.process "axebch_pool" {
         result = "",
         agent  = "",
       }
-    }
-
-    stage.regex {
-      expression = "^\\{(?P<json_body>.*)$"
-    }
-
-    stage.template {
-      source   = "wrapped"
-      template = `{"_msg":"{{ if .Values.workername }}{{ .Values.workername }}{{ else }}sharelog{{ end }} result={{ .Values.result }} diff={{ .Values.diff }}",{{ .Values.json_body }}`
-    }
-
-    stage.output {
-      source = "wrapped"
     }
   }
 }

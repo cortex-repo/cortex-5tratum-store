@@ -101,6 +101,8 @@ services:
     command:
       - -storageDataPath=/victoria-logs-data
       - -retentionPeriod=30d
+      # Fill empty _msg when ingested JSON has no message-like field
+      - -defaultMsgValue=-
     ports:
       - "9428:9428"
     volumes:

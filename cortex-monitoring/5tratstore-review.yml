@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: cortex-monitoring
-appVersion: dev-0.0.15
+appVersion: dev-0.0.16
 reviewedAt: ""
 reviewedBy: ""
 upstream:
