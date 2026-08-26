@@ -7,7 +7,7 @@ prometheus.exporter.self "alloy" {}
 
 prometheus.scrape "alloy" {
   targets         = prometheus.exporter.self.alloy.targets
-  scrape_interval = "30s"
+  scrape_interval = "15s"
   forward_to      = [prometheus.remote_write.victoria.receiver]
 }
 
@@ -19,7 +19,7 @@ prometheus.scrape "node_exporter" {
       "instance"    = "cortex-host",
     },
   ]
-  scrape_interval = "30s"
+  scrape_interval = "15s"
   forward_to      = [prometheus.remote_write.victoria.receiver]
 }
 
@@ -31,7 +31,7 @@ prometheus.scrape "victoriametrics" {
     },
   ]
   metrics_path    = "/metrics"
-  scrape_interval = "30s"
+  scrape_interval = "15s"
   forward_to      = [prometheus.remote_write.victoria.receiver]
 }
 
@@ -45,7 +45,7 @@ prometheus.remote_write "victoria" {
 // then ship to VictoriaLogs (Loki-compatible push API).
 discovery.docker "containers" {
   host             = "unix:///var/run/docker.sock"
-  refresh_interval = "30s"
+  refresh_interval = "15s"
 }
 
 discovery.relabel "containers" {
@@ -90,8 +90,8 @@ loki.write "victoria_logs_ckpool" {
 }
 
 // Axe BCH pool logs (ckpool + sharelogs under pool/www).
-// After log cleanup the tree is smaller — poll more often so dashboards
-// don't show multi-minute gaps, while still ignoring stale files.
+// Aggressive polling for tight dashboard panels; keep ignore_older_than so
+// cleaned historical trees do not reopen every stale file.
 local.file_match "axebch_pool" {
   path_targets = [
     {
@@ -109,8 +109,8 @@ local.file_match "axebch_pool" {
       "pool_app"  = "axebch",
     },
   ]
-  sync_period       = "20s"
-  ignore_older_than = "6h"
+  sync_period       = "5s"
+  ignore_older_than = "12h"
 }
 
 loki.source.file "axebch_pool" {
@@ -121,8 +121,8 @@ loki.source.file "axebch_pool" {
   tail_from_end = true
 
   file_watch {
-    min_poll_frequency = "1s"
-    max_poll_frequency = "5s"
+    min_poll_frequency = "250ms"
+    max_poll_frequency = "1s"
   }
 }
 

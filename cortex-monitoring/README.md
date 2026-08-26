@@ -1,4 +1,4 @@
-# Cortex Monitoring (`dev-0.0.20`)
+# Cortex Monitoring (`dev-0.0.21`)
 
 5tratumOS store recipe for the Cortex Monitoring stack. The store app opens a
 **Cortex-branded portal image** (not Grafana). Each tool link opens in a new
@@ -44,9 +44,9 @@ Alloy mounts `/var/lib/5tratumos/apps/axebch/data/pool/www` and tails:
 | `ckpool.log*` | `job=ckpool`, `log_type=ckpool`, `coin=bch` |
 | `**/*.sharelog` | `job=ckpool`, `log_type=sharelog`, `coin=bch` (+ `result`, `agent` from JSON) |
 
-New hex subfolders / `.sharelog` files are discovered every **20s**.
-Only files touched in the last **6 hours** are tailed (`ignore_older_than`).
-File poll interval is **1–5s**. Alloy remains capped at **1 CPU / 768 MiB**.
+New hex subfolders / `.sharelog` files are discovered every **5s**.
+Only files touched in the last **12 hours** are tailed (`ignore_older_than`).
+File poll interval is **250ms–1s**. Alloy remains capped at **1 CPU / 768 MiB**.
 On first discover Alloy starts at **EOF** (`tail_from_end`) so historical heavy
 sharelogs are not backfilled. To re-ingest from scratch, stop the stack, clear
 Alloy positions under `APP_DATA_DIR/alloy`, set `tail_from_end = false` /
