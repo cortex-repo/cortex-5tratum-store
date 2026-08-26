@@ -1,4 +1,4 @@
-# Cortex Monitoring (`dev-0.0.14`)
+# Cortex Monitoring (`dev-0.0.15`)
 
 5tratumOS store recipe for the Cortex Monitoring stack. The store app opens a
 **Cortex-branded portal image** (not Grafana). Each tool link opens in a new
@@ -47,6 +47,10 @@ discover Alloy starts at **EOF** (`tail_from_end`) so historical heavy sharelogs
 are not backfilled. To re-ingest from scratch, stop the stack, clear Alloy
 positions under `APP_DATA_DIR/alloy`, set `tail_from_end = false` temporarily,
 and restart.
+
+Sharelog lines are pure JSON without a `msg` field. Alloy injects `_msg`
+(worker + result + diff) before push so VictoriaLogs does not show
+“missing _msg field”.
 
 ### Explore (VictoriaLogs / Grafana Explore)
 
