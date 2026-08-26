@@ -17,7 +17,30 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
   "id": null,
-  "links": [],
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "dashboard",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Axe BCH Vardiff",
+      "type": "link",
+      "url": "/d/cortex-axebch-vardiff"
+    },
+    {
+      "asDropdown": false,
+      "icon": "dashboard",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Axe BCH Share Difficulty",
+      "type": "link",
+      "url": "/d/cortex-axebch-share-diff"
+    }
+  ],
   "panels": [
     {
       "collapsed": false,

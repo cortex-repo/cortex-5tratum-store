@@ -28,6 +28,17 @@
       "title": "Axe BCH Pool Logs",
       "type": "link",
       "url": "/d/cortex-axebch-pool-logs"
+    },
+    {
+      "asDropdown": false,
+      "icon": "dashboard",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Axe BCH Vardiff",
+      "type": "link",
+      "url": "/d/cortex-axebch-vardiff"
     }
   ],
   "panels": [

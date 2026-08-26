@@ -1,4 +1,4 @@
-# Cortex Monitoring (`dev-0.0.17`)
+# Cortex Monitoring (`dev-0.0.18`)
 
 5tratumOS store recipe for the Cortex Monitoring stack. The store app opens a
 **Cortex-branded portal image** (not Grafana). Each tool link opens in a new
@@ -29,6 +29,7 @@ Provisioned dashboards (Grafana → Cortex Monitoring folder):
 - **APU Power** — RAPL package/core watts + GPU hwmon watts
 - **Axe BCH Pool Logs** — ckpool.log + sharelog explore panels
 - **Axe BCH Share Difficulty** — Σ `diff` / `sdiff` over time and by worker
+- **Axe BCH Vardiff** — assigned share diff, pool SPS, workers, startdiff vs old maxdiff cap
 
 Fan Speed / Power Supply panels only show data if the host exposes them via
 `/sys` (hwmon / power_supply). On AMD mini PCs such as the Minisforum AI X1 Pro,
