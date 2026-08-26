@@ -1,4 +1,4 @@
-# Cortex Monitoring (`dev-0.0.13`)
+# Cortex Monitoring (`dev-0.0.14`)
 
 5tratumOS store recipe for the Cortex Monitoring stack. The store app opens a
 **Cortex-branded portal image** (not Grafana). Each tool link opens in a new
@@ -27,10 +27,37 @@ Node Exporter collectors enabled for Node Exporter Full: `processes`, `systemd`
 Provisioned dashboards (Grafana → Cortex Monitoring folder):
 - **Node Exporter Full** (1860)
 - **APU Power** — RAPL package/core watts + GPU hwmon watts
+- **Axe BCH Pool Logs** — ckpool.log + sharelog explore panels
 
 Fan Speed / Power Supply panels only show data if the host exposes them via
 `/sys` (hwmon / power_supply). On AMD mini PCs such as the Minisforum AI X1 Pro,
 use **APU Power** for package/core/GPU watts (RAPL + amdgpu).
+
+## Axe BCH pool logs → VictoriaLogs
+
+Alloy mounts `/var/lib/5tratumos/apps/axebch/data/pool/www` and tails:
+
+| Path | Stream labels |
+|------|----------------|
+| `ckpool.log*` | `job=ckpool`, `log_type=ckpool`, `coin=bch` |
+| `**/*.sharelog` | `job=ckpool`, `log_type=sharelog`, `coin=bch` (+ `result`, `agent` from JSON) |
+
+New hex subfolders / `.sharelog` files are discovered every 10s. On first
+discover Alloy starts at **EOF** (`tail_from_end`) so historical heavy sharelogs
+are not backfilled. To re-ingest from scratch, stop the stack, clear Alloy
+positions under `APP_DATA_DIR/alloy`, set `tail_from_end = false` temporarily,
+and restart.
+
+### Explore (VictoriaLogs / Grafana Explore)
+
+```
+_stream:{job="ckpool"}
+_stream:{job="ckpool",log_type="sharelog"}
+_stream:{job="ckpool",log_type="sharelog"} | unpack_json
+_stream:{job="ckpool",log_type="sharelog"} | unpack_json | result:true
+_stream:{job="ckpool",log_type="sharelog"} | unpack_json | workername:="<worker>"
+_stream:{job="ckpool",log_type="ckpool"}
+```
 
 ## Password
 
@@ -54,6 +81,10 @@ docker exec -it "$(docker ps --format '{{.Names}}' | grep -E 'cortex-monitoring.
 # uninstall in UI first, then clear app data if config/dashboards are stale
 sudo rm -rf /var/lib/5tratumos/apps/cortex-monitoring
 ```
+
+For Alloy config updates only, refresh the Custom Store version and restart the
+`alloy` service so `/etc/alloy/config.alloy` is re-read (or reinstall retaining
+data after copying the new `data/config/alloy.alloy`).
 
 ## Recipe layout
 

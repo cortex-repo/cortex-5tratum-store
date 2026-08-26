@@ -151,6 +151,8 @@ services:
       - ${APP_DATA_DIR}/data/config/alloy.alloy:/etc/alloy/config.alloy:ro
       - ${APP_DATA_DIR}/alloy:/var/lib/alloy
       - /var/run/docker.sock:/var/run/docker.sock
+      # Axe BCH ckpool + sharelogs (nested folders created continuously)
+      - /var/lib/5tratumos/apps/axebch/data/pool/www:/host/axebch-pool-www:ro
     security_opt:
       - no-new-privileges:true
     depends_on:

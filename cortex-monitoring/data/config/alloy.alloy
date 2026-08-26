@@ -80,3 +80,61 @@ loki.write "victoria_logs" {
     url = "http://victorialogs:9428/insert/loki/api/v1/push"
   }
 }
+
+// Axe BCH pool logs (ckpool + sharelogs under pool/www).
+// Sharelogs are NDJSON in nested hex folders that appear continuously.
+local.file_match "axebch_pool" {
+  path_targets = [
+    {
+      "__path__"  = "/host/axebch-pool-www/ckpool.log*",
+      "job"       = "ckpool",
+      "log_type"  = "ckpool",
+      "coin"      = "bch",
+      "pool_app"  = "axebch",
+    },
+    {
+      "__path__"  = "/host/axebch-pool-www/**/*.sharelog",
+      "job"       = "ckpool",
+      "log_type"  = "sharelog",
+      "coin"      = "bch",
+      "pool_app"  = "axebch",
+    },
+  ]
+  sync_period = "10s"
+}
+
+loki.source.file "axebch_pool" {
+  targets       = local.file_match.axebch_pool.targets
+  forward_to    = [loki.process.axebch_pool.receiver]
+  // Heavy historical sharelogs — start at EOF on first discover.
+  // Delete Alloy positions under APP_DATA_DIR/alloy to re-ingest if needed.
+  tail_from_end = true
+}
+
+loki.process "axebch_pool" {
+  forward_to = [loki.write.victoria_logs.receiver]
+
+  // Sharelogs are one JSON object per line — promote low-cardinality fields.
+  stage.match {
+    selector = "{log_type=\"sharelog\"}"
+
+    stage.json {
+      expressions = {
+        result     = "result",
+        errn       = "errn",
+        agent      = "agent",
+        workername = "workername",
+        username   = "username",
+        diff       = "diff",
+        sdiff      = "sdiff",
+      }
+    }
+
+    stage.labels {
+      values = {
+        result = "",
+        agent  = "",
+      }
+    }
+  }
+}
