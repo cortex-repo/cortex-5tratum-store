@@ -1,4 +1,4 @@
-# Cortex Monitoring (`dev-0.0.21`)
+# Cortex Monitoring (`dev-0.0.22`)
 
 5tratumOS store recipe for the Cortex Monitoring stack. The store app opens a
 **Cortex-branded portal image** (not Grafana). Each tool link opens in a new

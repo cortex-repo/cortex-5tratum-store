@@ -15,7 +15,7 @@ source and container images live in their own repos and are pulled from GHCR.
 |-----|---------|---------|----------------|
 | [Cortex Mining Hub](./cortex-mining-hub/) | `dev-0.1.8` | Fleet portal for Axe nodes, LAN miners, and 5tratumOS KPIs | `ghcr.io/cortex-repo/cortex-mining-hub` · [cortex-mining](https://github.com/cortex-repo/cortex-mining) |
 | [Cortex Trading](./cortex-trading/) | `dev-0.1.18` | eToro Demo/LIVE agent with RiskGate and ops dashboard | `ghcr.io/cortex-repo/cortex-trading` · [cortex-trading](https://github.com/cortex-repo/cortex-trading) |
-| [Cortex Monitoring](./cortex-monitoring/) | `dev-0.0.21` | Observability stack portal (Grafana, VictoriaMetrics/Logs, Alloy, Axe BCH pool logs, …) | `ghcr.io/cortex-repo/cortex-monitoring` · [cortex-monitoring](https://github.com/cortex-repo/cortex-monitoring) |
+| [Cortex Monitoring](./cortex-monitoring/) | `dev-0.0.22` | Observability stack portal (Grafana, VictoriaMetrics/Logs, Alloy, Axe BCH pool logs, …) | `ghcr.io/cortex-repo/cortex-monitoring` · [cortex-monitoring](https://github.com/cortex-repo/cortex-monitoring) |
 
 ## Install
 

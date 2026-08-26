@@ -29,6 +29,7 @@
       "tags": [],
       "targetBlank": false,
       "title": "Axe BCH Share Difficulty",
+      "tooltip": "",
       "type": "link",
       "url": "/d/cortex-axebch-share-diff"
     },
@@ -40,10 +41,12 @@
       "tags": [],
       "targetBlank": false,
       "title": "Axe BCH Pool Logs",
+      "tooltip": "",
       "type": "link",
       "url": "/d/cortex-axebch-pool-logs"
     }
   ],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
@@ -53,7 +56,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 1,
+      "id": 26,
       "title": "Pool status (ckpool.log \u2014 complete)",
       "type": "row"
     },
@@ -69,19 +72,17 @@
             "mode": "thresholds"
           },
           "decimals": 2,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "blue",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "ops"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
@@ -135,19 +136,17 @@
             "mode": "thresholds"
           },
           "decimals": 2,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "blue",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "ops"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
@@ -201,19 +200,17 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
@@ -267,19 +264,17 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "yellow",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
@@ -333,19 +328,17 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "orange",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
@@ -399,19 +392,17 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "purple",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
@@ -461,7 +452,7 @@
         "x": 0,
         "y": 6
       },
-      "id": 8,
+      "id": 27,
       "title": "Assigned share diff (sharelog \u2014 sampled, Alloy tail_from_end)",
       "type": "row"
     },
@@ -477,19 +468,17 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "purple",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
@@ -543,19 +532,17 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "yellow",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
@@ -609,19 +596,17 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
@@ -675,19 +660,17 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "blue",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
@@ -741,19 +724,17 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "orange",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
@@ -807,19 +788,17 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
@@ -869,7 +848,7 @@
         "x": 0,
         "y": 12
       },
-      "id": 15,
+      "id": 28,
       "title": "Vardiff over time",
       "type": "row"
     },
@@ -891,6 +870,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 20,
             "gradientMode": "none",
@@ -907,6 +887,7 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -917,19 +898,17 @@
             }
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 10,
@@ -939,6 +918,10 @@
       },
       "id": 16,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [
             "mean",
@@ -946,6 +929,8 @@
             "lastNotNull"
           ],
           "displayMode": "table",
+          "enableFacetedFilter": false,
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": true
         },
@@ -1012,6 +997,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 20,
             "gradientMode": "none",
@@ -1028,6 +1014,7 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1038,19 +1025,17 @@
             }
           },
           "decimals": 2,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "ops"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 10,
@@ -1060,6 +1045,10 @@
       },
       "id": 17,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [
             "mean",
@@ -1067,6 +1056,8 @@
             "lastNotNull"
           ],
           "displayMode": "table",
+          "enableFacetedFilter": false,
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": true
         },
@@ -1112,7 +1103,7 @@
         "x": 0,
         "y": 23
       },
-      "id": 18,
+      "id": 29,
       "title": "Reconnect mix",
       "type": "row"
     },
@@ -1134,6 +1125,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "bars",
             "fillOpacity": 40,
             "gradientMode": "none",
@@ -1150,6 +1142,7 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1160,19 +1153,17 @@
             }
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 9,
@@ -1182,6 +1173,10 @@
       },
       "id": 19,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [
             "mean",
@@ -1189,6 +1184,8 @@
             "lastNotNull"
           ],
           "displayMode": "table",
+          "enableFacetedFilter": false,
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": true
         },
@@ -1244,6 +1241,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 20,
             "gradientMode": "none",
@@ -1260,6 +1258,7 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1270,19 +1269,17 @@
             }
           },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 9,
@@ -1292,6 +1289,10 @@
       },
       "id": 20,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [
             "mean",
@@ -1299,6 +1300,8 @@
             "lastNotNull"
           ],
           "displayMode": "table",
+          "enableFacetedFilter": false,
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": true
         },
@@ -1355,7 +1358,7 @@
         "x": 0,
         "y": 33
       },
-      "id": 21,
+      "id": 30,
       "title": "By agent and stratum client",
       "type": "row"
     },
@@ -1370,41 +1373,18 @@
           "color": {
             "mode": "palette-classic"
           },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 10,
@@ -1418,6 +1398,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": false
         },
@@ -1446,6 +1427,7 @@
           },
           "editorMode": "code",
           "expr": "_stream:{job=\"ckpool\",log_type=\"sharelog\",result=\"true\"} | unpack_json | stats by (agent) avg(diff) as avg_diff | sort by (avg_diff desc) | limit 15",
+          "legendFormat": "{{agent}}",
           "queryType": "stats",
           "refId": "A"
         }
@@ -1464,41 +1446,18 @@
           "color": {
             "mode": "palette-classic"
           },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 10,
@@ -1512,6 +1471,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": false
         },
@@ -1539,7 +1499,8 @@
             "uid": "victoria-logs"
           },
           "editorMode": "code",
-          "expr": "_stream:{job=\"ckpool\",log_type=\"sharelog\",result=\"true\"} | unpack_json | stats by (clientid) avg(diff) as avg_diff | sort by (avg_diff desc) | limit 15",
+          "expr": "_stream:{job=\"ckpool\",log_type=\"sharelog\",result=\"true\"} | unpack_json | stats by (clientid, agent) avg(diff) as avg_diff | sort by (avg_diff desc) | limit 15",
+          "legendFormat": "{{agent}} (id: {{clientid}})",
           "queryType": "stats",
           "refId": "A"
         }
@@ -1558,41 +1519,18 @@
           "color": {
             "mode": "palette-classic"
           },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 10,
@@ -1606,6 +1544,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": false
         },
@@ -1633,7 +1572,8 @@
             "uid": "victoria-logs"
           },
           "editorMode": "code",
-          "expr": "_stream:{job=\"ckpool\",log_type=\"sharelog\",result=\"true\"} | unpack_json | stats by (clientid) max(diff) as max_diff | sort by (max_diff desc) | limit 15",
+          "expr": "_stream:{job=\"ckpool\",log_type=\"sharelog\",result=\"true\"} | unpack_json | stats by (clientid, agent) max(diff) as max_diff | sort by (max_diff desc) | limit 15",
+          "legendFormat": "{{agent}} (id: {{clientid}})",
           "queryType": "stats",
           "refId": "A"
         }
@@ -1652,41 +1592,18 @@
           "color": {
             "mode": "palette-classic"
           },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
           "decimals": 0,
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 10,
@@ -1700,6 +1617,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": false
         },
@@ -1728,6 +1646,7 @@
           },
           "editorMode": "code",
           "expr": "_stream:{job=\"ckpool\",log_type=\"sharelog\",result=\"true\"} | unpack_json | stats by (agent) count() as shares | sort by (shares desc) | limit 15",
+          "legendFormat": "{{agent}}",
           "queryType": "stats",
           "refId": "A"
         }
@@ -1736,8 +1655,9 @@
       "type": "bargauge"
     }
   ],
+  "preload": false,
   "refresh": "30s",
-  "schemaVersion": 39,
+  "schemaVersion": 42,
   "tags": [
     "cortex-monitoring",
     "ckpool",
@@ -1746,17 +1666,26 @@
     "vardiff",
     "difficulty"
   ],
-  "templating": {
-    "list": []
-  },
   "time": {
     "from": "now-1h",
     "to": "now"
   },
-  "timepicker": {},
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
   "timezone": "browser",
   "title": "Axe BCH Vardiff",
   "uid": "cortex-axebch-vardiff",
-  "version": 1,
-  "weekStart": ""
+  "version": 1
 }

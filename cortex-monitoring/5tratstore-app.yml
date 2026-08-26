@@ -12,7 +12,7 @@ description: >-
   VictoriaLogs with share-difficulty and vardiff dashboards, and Docker log
   shipping. Login for Grafana is admin with password cortex; also written to
   admin-password.txt. Portal image: ghcr.io/cortex-repo/cortex-monitoring.
-version: dev-0.0.21
+version: dev-0.0.22
 category: Monitoring
 developer: Cortex Monitoring
 website: https://github.com/cortex-repo/cortex-5tratum-store
