@@ -1,12 +1,12 @@
 # Licence and image record
 
-Cortex Mining Hub `dev-0.1.13` is a first-party Cortex recipe. The store
+Cortex Mining Hub `dev-0.1.14` is a first-party Cortex recipe. The store
 ships listing metadata and Compose only. The node pulls the portal image
 from GitHub Container Registry.
 
-- **Cortex Mining Hub `dev-0.1.13`** — source-available first-party portal
+- **Cortex Mining Hub `dev-0.1.14`** — source-available first-party portal
   - Source: https://github.com/cortex-repo/cortex-mining
-  - Image: `ghcr.io/cortex-repo/cortex-mining-hub:dev-0.1.13`
+  - Image: `ghcr.io/cortex-repo/cortex-mining-hub:dev-0.1.14`
   - Base: `python:3.12.11-slim-bookworm@sha256:519591d6871b7bc437060736b9f7456b8731f1499a57e22e6c285135ae657bf7` (PSF)
 - **Icon:** original Cortex Mining artwork (`icon.png`), the same mark used
   in the hub portal.
