@@ -1,7 +1,7 @@
-# Cortex Mining Hub (`dev-0.1.14`)
+# Cortex Mining Hub (`dev-0.1.15`)
 
 First-party portal for Axe nodes, LAN miners, and 5tratumOS fleet KPIs.
-The recipe pulls `ghcr.io/cortex-repo/cortex-mining-hub:dev-0.1.14` (built
+The recipe pulls `ghcr.io/cortex-repo/cortex-mining-hub:dev-0.1.15` (built
 from [cortex-mining](https://github.com/cortex-repo/cortex-mining)).
 The store listing gallery is `1.png`–`6.png`.
 
